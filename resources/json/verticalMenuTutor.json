@@ -1,0 +1,114 @@
+{
+    "menu": [
+        {
+            "url": "/",
+            "name": "Tutor's Dashboard",
+            "i18n": "Tutor's Dashboard",
+            "class": "waves-effect waves-cyan",
+            "icon": "settings_input_svideo",
+            "slug": "Tutor's Dashboard",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "navheader": "Manage",
+            "icon": "more_horiz"
+        },
+        {
+            "url": "javascript:void(0)",
+            "name": "Admin",
+            "i18n": "Admin",
+            "class": "collapsible-header waves-effect waves-cyan customAdminClass",
+            "slug": "app-invoice",
+            "icon": "format_list_bulleted",
+            "submenu": [
+                {
+                    "url": "view-tutor-sessions",
+                    "name": "View Tutor Session Notes",
+                    "i18n": "View Tutor Session Notes",
+                    "slug": "view-tutor-sessions"
+        }
+            ]
+        },
+        {
+            "url": "course-curriculum",
+            "name": "Assign Course Curriculum",
+            "i18n": "Assign Course Curriculum",
+            "class": "waves-effect waves-cyan",
+            "icon": "content_paste",
+            "slug": "course-curriculum",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "view-curriculum",
+            "name": "View Course Curriculum",
+            "i18n": "View Course Curriculum",
+            "class": "waves-effect waves-cyan",
+            "icon": "chrome_reader_mode",
+            "slug": "view-curriculum",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "post-session-notes",
+            "name": "Post Session Notes",
+            "i18n": "Post Session Notes",
+            "class": "waves-effect waves-cyan",
+            "icon": "import_contacts",
+            "slug": "post-session-notes",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "view-session-notes",
+            "name": "View Session Notes",
+            "i18n": "View Session Notes",
+            "class": "waves-effect waves-cyan",
+            "icon": "filter_tilt_shift",
+            "slug": "view-session-notes",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "review-homework",
+            "name": "Review-Homework",
+            "i18n": "Review-Homework",
+            "class": "waves-effect waves-cyan customClass",
+            "icon": "hourglass_empty",
+            "slug": "review-homework",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "upcoming-sessions-tutor",
+            "name": "Upcoming Sessions",
+            "i18n": "Upcoming Sessions",
+            "class": "waves-effect waves-cyan",
+            "icon": "today",
+            "slug": "upcoming-sessions",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "upload-system-files",
+            "name": "Upload System Files",
+            "i18n": "Upload System Files",
+            "class": "waves-effect waves-cyan",
+            "icon": "attachment",
+            "slug": "upload-system-files",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "grade-7-8",
+            "name": "Grade 7 & 8 (Math) Docs",
+            "i18n": "Grade 7 & 8 (Math) Docs",
+            "class": "waves-effect waves-cyan",
+            "icon": "insert_drive_file",
+            "slug": "grade-7-8",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "grade-7-10",
+            "name": "Grade 7 & 10 (ELA) Docs",
+            "i18n": "Grade 7 & 10 (ELA) Docs",
+            "class": "waves-effect waves-cyan",
+            "icon": "insert_drive_file",
+            "slug": "grade-7-10",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        }
+    ]
+}

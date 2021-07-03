@@ -1,0 +1,111 @@
+{
+    "menu": [
+        {
+            "url": "/",
+            "name": "Dashboard",
+            "i18n": "Dashboard",
+            "class": "waves-effect waves-cyan",
+            "icon": "settings_input_svideo",
+            "slug": "dashboard",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "navheader": "Manage",
+            "icon": "more_horiz"
+        },
+        {
+            "url": "course-detail",
+            "name": "Course Detail",
+            "i18n": "Course Detail",
+            "class": "waves-effect waves-cyan",
+            "icon": "content_paste",
+            "slug": "course-detail",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "session-notes",
+            "name": "Session Notes",
+            "i18n": "Session Notes",
+            "class": "waves-effect waves-cyan",
+            "icon": "import_contacts",
+            "slug": "session-notes",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },        
+        {
+            "url": "javascript:void(0)",
+            "name": "Homework",
+            "i18n": "Homework",
+            "class": "collapsible-header waves-effect waves-cyan customClass",
+            "slug": "app-invoice",
+            "icon": "format_list_bulleted",
+            "submenu": [
+                {
+                    "url": "homework-list",
+                    "name": "Homework List",
+                    "i18n": "Homework List",
+                    "slug": "homework-list"
+        },
+        {
+                    "url": "homework-upload",
+                    "name": "Homework Upload",
+                    "i18n": "Homework Upload",
+                    "slug": "homework-upload"
+                }
+            ]
+        },
+        {
+            "url": "assessment",
+            "name": "Assessment Test",
+            "i18n": "Assessment Test",
+            "class": "waves-effect waves-cyan",
+            "icon": "chrome_reader_mode",
+            "slug": "assessment-test",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "quizes",
+            "name": "Quizlet",
+            "i18n": "Quizlet",
+            "class": "waves-effect waves-cyan",
+            "icon": "photo_filter",
+            "slug": "quizes",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "printables",
+            "name": "Printables",
+            "i18n": "Printables",
+            "class": "waves-effect waves-cyan",
+            "icon": "receipt",
+            "slug": "printables",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "upcoming-sessions",
+            "name": "Upcoming Sessions",
+            "i18n": "Upcoming Sessions",
+            "class": "waves-effect waves-cyan",
+            "icon": "today",
+            "slug": "upcoming-sessions",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "messages",
+            "name": "Messages",
+            "i18n": "Messages",
+            "class": "waves-effect waves-cyan",
+            "icon": "chat_bubble_outline",
+            "slug": "messages",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "articles",
+            "name": "Articles",
+            "i18n": "Articles",
+            "class": "waves-effect waves-cyan",
+            "icon": "cast",
+            "slug": "articles",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        }
+    ]
+}

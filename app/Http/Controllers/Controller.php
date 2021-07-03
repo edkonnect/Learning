@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Controllers;
+use Request,Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Response;
+
+class Controller extends BaseController {
+
+    use AuthorizesRequests,
+        DispatchesJobs,
+        ValidatesRequests;
+
+    public function __construct() {
+
+        $this->middleware(function ($request, $next) {
+            $urlSegment = Request::segment(1);
+            if ($urlSegment == 'showInvoice') {
+
+                if (isset(Auth::user()->roles) && Auth::user()->roles == '3') {
+                    return $next($request);
+                } else {
+                    return new Response(view('/pages/page-404'));
+                }
+            }
+            return $next($request);
+        });
+    }
+
+}
