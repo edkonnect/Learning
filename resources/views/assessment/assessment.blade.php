@@ -36,7 +36,7 @@ use App\Models\Course;
                             <div class="col m6 s12">
                                 <div class="card-title ">
                                     <h5 style="font-weight: bold;
-                                        color: #8b62b5;">ASSESSMENT </h5></div>
+                                        color: #8b62b5;">ASSESSMENT TEST</h5></div>
                             </div>
                         </div>
                     </div>
