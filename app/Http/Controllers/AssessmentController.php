@@ -126,4 +126,75 @@ public function saveAssessment(Request $request){
 }
 
 
+ public function uploadResult(Request $request){
+  $pageConfigs = ['bodyCustomClass' => 'app-page'];
+
+
+      $getStudents = Student::All()->pluck('name', 'id');
+      $studentID = $request->stud_id;
+      $data = '';
+      $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
+      $data .= "<option value=''>Select Course</option>";
+      foreach ($getCourseDetail as $key => $val) {
+          $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
+      }
+      $getAssessment = Assessment::All();
+
+return view('assessment.uploadResult', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents,'data'=>$data,'getAssessment'=>$getAssessment]);
+}
+public function AssessmentResult(Request $request){
+  $pageConfigs = ['bodyCustomClass' => 'app-page'];
+  $data = $courseID = '';
+  $studentID = $request->studentID;
+  $courseID = $request->course;
+  $getStudents = $getAssessment = array();
+      $getStudents = Student::where( ['status' => 'Active'])->pluck('name', 'id');
+      if (isset($getStudents)) {
+          $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
+          $data = '';
+          $data .= "<option value=''>Select Course</option>";
+          foreach ($getCourseDetail as $keyVal => $val) {
+              if ($keyVal == $courseID) {
+                  $selected = 'selected';
+              } else {
+                  $selected = '';
+              }
+              $data .= "<option " . $selected . " value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
+          }
+          $getAssessment = Assessment::where(['student_id' => $studentID, 'course_id' => $courseID])->get();
+
+  }
+
+  $view= view('assessment.AssessmentResult', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents, 'getAssessment' => $getAssessment, 'data' => $data])->render();
+   return $view;
+}
+public function UploadResultPdf($id){
+  $upload = Assessment::find($id);
+       return view('assessment.UploadResultPdf',compact('upload'));
+
+}
+
+public function StoreResult(Request $request, $id){
+  $result_pdf=  $request->file('result');
+  $status =1;
+
+          $name_gen = hexdec(uniqid());
+          $ext = strtolower($result_pdf->getClientOriginalExtension());
+          $name = $name_gen.'.'.$ext;
+          $up_location = 'internal/uploads/assessments';
+          $last = $up_location.$name;
+          $result_pdf->move($up_location,$name);
+
+          Assessment::find($id)->update([
+              'status' => $status,
+              'result_pdf' => $last,
+              'created_at' => Carbon::now()
+          ]);
+
+
+          return Redirect('upload-result')->with('success','Result Uploaded Successfully');
+
+}
+
+
 }

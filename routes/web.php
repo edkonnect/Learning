@@ -32,6 +32,8 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('/tutor/tutorProfileEdit/{id}', 'DashboardController@tutorProfileEdit');
     Route::any('/userProfile', 'DashboardController@userProfile');
     Route::any('/userProfile/changePassword', 'DashboardController@changePassword');
+    Route::any('/student-analytics','DashboardController@StudentAnalytics');
+  Route::any('/student-analytics/upload','DashboardController@UploadAnalytics');
     //Session Notes
     Route::any('/session-notes', 'SessionController@index');
     Route::any('/post-session-notes', 'SessionController@tutorIndex');
@@ -40,10 +42,10 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('/session-notes/tutor/getCourse/', 'SessionController@getTutorCourse');
     Route::any('/session-notes/tutor/getSession/', 'SessionController@getTutorSession');
     Route::any('/session-notes/tutor/getTimePeriodData/', 'SessionController@getTutorTimePeriodData');
-    
+
     Route::any('/tutor/getStudents', 'SessionController@getStudents');
     Route::any('/tutor/getTutorList', 'SessionController@getTutorList');
-    Route::any('/tutor/getFiles', 'SessionController@getFiles');  
+    Route::any('/tutor/getFiles', 'SessionController@getFiles');
     Route::any('/tutor/getSystemFiles', 'SessionController@getSystemFiles');
     Route::any('/tutor/getLessonPlan', 'SessionController@getLessonPlan');
     Route::any('/tutor/getLessonPlanDetails', 'SessionController@getLessonPlanDetails');
@@ -73,7 +75,7 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('/assessment', 'AssessmentController@index');
     Route::any('/assessment/assessments','AssessmentController@getAssessment');
     Route::any('/assessment/test/{id}','AssessmentController@assessmentTest');
-    
+
     Route::any('/printables', 'PrintablesController@index');
     Route::any('/printables/getTopics', 'PrintablesController@getTopics');
 
@@ -86,12 +88,33 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('/course-detail', 'CourseDetailController@index');
     Route::any('/course-detail/getLessonList', 'CourseDetailController@getLessonList');
 
+    Route::any('/assign-curriculum','CurriculumController@index');
+    Route::any('/assign-curriculum/get-curriculum','CurriculumController@AssignCurriculum' );
+    Route::any('/assign-curriculum/upload','CurriculumController@Upload' );
+
+    //Create Lesson
+    Route::any('/create-curriculum','CurriculumController@createLesson');
+    Route::any('/create-curriculum/upload','CurriculumController@lessonUpload');
+
+    //Register User
+    Route::any('/register-user','UserRegisterController@index');
+    Route::any('/register-user/store','UserRegisterController@StoreUser');
+    Route::any('/add-student','UserRegisterController@AddStudent');
+    Route::any('/save-student','UserRegisterController@SaveStudent');
+
+    //ASSESSMENT utor Portal
+      Route::any('/add-assessment', 'AssessmentController@addAssessment');
+      Route::any('/save-assessment', 'AssessmentController@saveAssessment');
+      Route::any('/upload-result', 'AssessmentController@uploadResult');
+      Route::any('/assessment/assessments-result','AssessmentController@AssessmentResult');
+      Route::any('/assessment/upload-result-pdf/{id}', 'AssessmentController@UploadResultPdf');
+      Route::any('/assessment/store-result/{id}', 'AssessmentController@StoreResult');
+
     Route::any('/quizes', 'QuizController@index');
     Route::any('/quizes/getQuizesList', 'QuizController@getQuizesList');
     Route::any('/quizes/startQuiz/{id}', 'QuizController@startQuiz');
-    
-    
+
+
     Route::any('/test-index', 'TestController@index');
     Route::any('/articles', 'DashboardController@articles');
 });
-
