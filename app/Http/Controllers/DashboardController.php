@@ -13,6 +13,7 @@ use App\Models\StudentAnalytics;
 use App\Models\Invoices;
 use App\Models\StudentSessionPerformance;
 use DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller {
 
@@ -81,7 +82,7 @@ class DashboardController extends Controller {
         }
         return view('dashboard.index', ['pageConfigs' => $pageConfigs, 'getNoofsessionCompleted' => $getNoofsessionCompleted, 'getsessionData' => $getsessionData, 'studentAnalytics' => $studentAnalytics, 'getStudents' => $getStudents, 'studentSessionPerformance' => $studentSessionPerformance, 'customDashboardData' => $customDashboardData, 'data' => $data, 'timePeriod' => $timePeriod]);
     }
-    
+
     public function getNumberOfSession(Request $request) {
         $input = $request->timePeriod;
         $userID = Auth::user()->id;
@@ -280,6 +281,45 @@ class DashboardController extends Controller {
         $customDashboardData['typeTwo'] = CustomDashboardData::where(['status' => 'Active', 'type' => 2])->get();
         $customDashboardData['typeThree'] = CustomDashboardData::where(['status' => 'Active', 'type' => 3])->get();
         return view('dashboard.articles', ['customDashboardData' => $customDashboardData]);
+    }
+    public function StudentAnalytics(Request $request){
+
+      $pageConfigs = ['bodyCustomClass' => 'app-page'];
+
+
+          $Students = Student::All()->pluck('name', 'id');
+          $studentID = $request->stud_id;
+          $data = '';
+          $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
+          $data .= "<option value=''>Select Course</option>";
+          foreach ($getCourseDetail as $key => $val) {
+              $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
+          }
+
+
+
+
+    return view('dashboard.StudentAnalytics', ['pageConfigs' => $pageConfigs, 'Students' => $Students,'data'=>$data]);
+    }
+
+    public function UploadAnalytics(Request $request){
+    $now=Carbon::now();
+    StudentAnalytics::insert([
+            'student_id' => $request->student,
+            'course_id' => $request->course,
+            'proficiency_level'=> $request->performance,
+            'no_of_days_remaining'=> $request->no_of_hours,
+            'newSkills'=> $request->new_skills,
+            'participation_rate'=> $request->participation_rate,
+            'assessmentTaken'=> $request->assessment,
+            'created_at'=>$now,
+            'updated_at'=>$now,
+
+
+
+
+        ]);
+    return Redirect()->back()->with('success','Student Analytics Updated Successfully');
     }
 
 }

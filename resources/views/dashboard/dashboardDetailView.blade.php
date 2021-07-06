@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2-materialize.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/animate-css/animate.css')}}">
@@ -14,8 +13,8 @@
     <div id="card-stats" class="pt-0">
                 <div class="row">
                     <div class="col s12 m6 l4">
-                        <div id="weekly-earning" class="card animate fadeUp">
-                            <div class="card-content" style="box-shadow: 1px 2px 10px #999;">
+                        <div id="weekly-earning" class="card animate fadeUp" style="height: 310px;">
+                            <div class="card-content">
                                 <p class="mb-0 mt-0 display-flex justify-content-between" style="font-weight: bold; font-size: 16px;">Proficiency Level</p>
                                 <div class="current-balance-container">
                                     <div id="proficiency-donut-chart" class="current-balance-shadow"></div>
@@ -26,18 +25,20 @@
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
-                            <div class="card-content cyan white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >                                
+                            <div class="card-content cyan white-text" >
                                 <p class="card-stats-title"> Assessment Test Taken</p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->assesmentTaken)?$studentAnalytics->assesmentTaken:''}}</h4>
+                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->assessmentTaken)?$studentAnalytics->assessmentTaken:''}}</h4>
                             </div>
+
                         </div>
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
-                            <div class="card-content red accent-2 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
-                                <p class="card-stats-title">No. of Hours Spent In The Course </p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_days_used)?$studentAnalytics->no_of_days_used:''}}</h4>
+                            <div class="card-content red accent-2 white-text" >
+                                <p class="card-stats-title">No. of hours remaining in the course </p>
+                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_remaining)?$studentAnalytics->no_of_hours_remaining:''}}</h4>
                             </div>
+
                         </div>
                     </div>
 
@@ -57,18 +58,21 @@
                     ?>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
-                            <div class="card-content green lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
+                            <div class="card-content green lighten-1 white-text" >
                                 <p class="card-stats-title"> Participation Rate</p>
                                 <h4 class="card-stats-number white-text">{{$participantCateg}}</h4>
-                            </div> 
+                            </div>
+
                         </div>
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
-                            <div class="card-content orange lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
+                            <div class="card-content orange lighten-1 white-text" >
                                 <p class="card-stats-title"> New Skills Acquired</p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->newSkills)?$studentAnalytics->newSkills:''}}</h4>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -105,7 +109,7 @@
                                 <a href="javascript:void(0)" class="showTutorNotes" at="{{$studentSessionPerformanceVal->id}}"><i class="material-icons">remove_red_eye</i></a>
                             </td>
                         </tr>
-                        @endforeach                                                               
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -162,5 +162,14 @@ return [
     "Articles"=>"Articles",
     "Admin"=>"Admin",
     "View Tutor Session Notes"=>"View Tutor Session Notes",
+    "Assign Curriculum"=>"Assign Curriculum",
+  "Create Curriculum"=>"Create Curriculum",
+  "Register User"=>"Register User",
+   "Add User"=>"Add User",
+   "Add Student"=>"Add Student",
+     "Student Analytics"=>"Student Analytics",
+     "Assessments"=>"Assessments",
+  "Add Assessment"=>"Add Assessment",
+  "Upload Result"=>"Upload Result",
 ];
 ?>
