@@ -28,6 +28,7 @@ class DashboardController extends Controller {
         $getUserData = User::find($userID);
         if (is_object($getUserData) && $getUserData->roles == '3' && $getUserData->status == 'Active') {
             $getStudents = Student::where(['parent_id' => $userID, 'status' => 'Active'])->pluck('name', 'id');
+        //  dd($getStudents);
             if (isset($getStudents)) {
                 $i = 0;
                 foreach ($getStudents as $studKey => $getStudentsVal) {
@@ -133,7 +134,7 @@ class DashboardController extends Controller {
         $getUserData = User::find(Auth::user()->id);
         if (isset($getUserData) && $getUserData->roles == '3') {
             $studValArr = Student::where(['status' => 'Active', 'parent_id' => Auth::user()->id])->pluck('id');
-            $getCourseDetail = StudentCourseTutor::whereIn('student_id', $studValArr)->get();
+            $getCourseDetail = StudentCourseTutor::whereIn('student_id', $studValArr)->orderBy('student_id','Asc')->get();
             $getInvoicesDetail = Invoices::where('user_id', Auth::user()->id)->get();
             return view('dashboard.user-profile', ['getUserData' => $getUserData, 'getCourseDetail' => $getCourseDetail, 'getInvoicesDetail' => $getInvoicesDetail]);
         } else {

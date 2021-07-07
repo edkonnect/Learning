@@ -46,10 +46,10 @@
                 <div class="row">
                     <div class="col s12 center-align">
                         @if($getUserData->profile_image!='')
-                        <img class="responsive-img circle z-depth-5" style="border-radius: inherit;" width="120" src="{{isset($getUserData->profile_image) && $getUserData->profile_image!='' ? url('/').'/uploads/'.$getUserData->username.'/profile_image/'.$getUserData->profile_image:''}}" alt="">                       
+                        <img class="responsive-img circle z-depth-5" style="border-radius: inherit;" width="120" src="{{isset($getUserData->profile_image) && $getUserData->profile_image!='' ? url('/').'/uploads/'.$getUserData->username.'/profile_image/'.$getUserData->profile_image:''}}" alt="">
                         @else
                         <img class="responsive-img circle z-depth-5" style="border-radius: inherit;" width="120" src="{{url('/')}}/assets/images/user/default.jpg" alt="">
-                        @endif 
+                        @endif
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                             <div class="card-content">
                                 <div class="section section-data-tables">
                                     <div class="row">
-                                        <div class="col s12">                   
+                                        <div class="col s12">
                                             <table id="" class="display">
                                                 <thead>
                                                     <tr>
@@ -119,10 +119,50 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach($getCourseDetail as $getCourseDetailKey=>$getCourseDetailVal)
-                                                    <?php // echo '<pre>'; print_r($getCourseDetailVal); die; ?>
+                                                    <?php // echo '<pre>'; print_r($getCourseDetailVal); die;
+                                                  if (isset($getCourseDetailVal->getStudentDetail->grade)) {
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR1') {
+                                                          $grade = 'Grade 1';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR2') {
+                                                          $grade = 'Grade 2';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR3') {
+                                                          $grade = 'Grade 3';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR4') {
+                                                          $grade = 'Grade 4';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR5') {
+                                                          $grade = 'Grade 5';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR6') {
+                                                          $grade = 'Grade 6';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR7') {
+                                                          $grade = 'Grade 7';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR8') {
+                                                          $grade = 'Grade 8';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR9') {
+                                                          $grade = 'Grade 9';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR10') {
+                                                          $grade = 'Grade 10';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR11') {
+                                                          $grade = 'Grade 11';
+                                                      }
+                                                      if ($getCourseDetailVal->getStudentDetail->grade == 'GR12') {
+                                                          $grade = 'Grade 12';
+                                                      }
+                                                  }
+
+                                                     ?>
                                                     <tr>
                                                         <td>{{isset($getCourseDetailVal->getStudentDetail->name)?strtoupper($getCourseDetailVal->getStudentDetail->name):''}}</td>
-                                                        <td>{{isset($getCourseDetailVal->getStudentDetail->grade)?$getCourseDetailVal->getStudentDetail->grade:''}}</td>
+                                                        <td>{{$grade}}</td>
                                                         <td>{{isset($getCourseDetailVal->getCourseDetail->course_name)?$getCourseDetailVal->getCourseDetail->course_name:''}}</td>
                                                         <td>{{isset($getCourseDetailVal->subscription)?$getCourseDetailVal->subscription:''}}</td>
                                                         <td>{{isset($getCourseDetailVal->end_date)?date('l jS \of F Y h:i:s A',strtotime($getCourseDetailVal->end_date)):''}}</td>
@@ -191,7 +231,7 @@
 
 <div class="row">
     <div class="col s12">
-        <div id="myModal" class="modal" style="overflow-y: hidden !important;">            
+        <div id="myModal" class="modal" style="overflow-y: hidden !important;">
             <form method="POST" action="{{url('/').'/userprofile/storeUserData'}}" accept-charset="UTF-8" enctype="multipart/form-data" id="profileForm" name="profileForm">
 
                 {{ csrf_field() }}
@@ -221,7 +261,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <div class="input-field col m9 s12">                        
+                            <div class="input-field col m9 s12">
                                 <a href="{{url("/").'/userProfile'}}" class="waves-effect waves-light btn right" title="Cancel">Cancel<i class="material-icons right">backspace</i></a>
                             </div>
                             <div class="input-field col m3 s12">
@@ -234,7 +274,7 @@
             </form>
         </div>
     </div>
-    <div id="changePasswordModal" class="modal" style="overflow-y: hidden !important;">            
+    <div id="changePasswordModal" class="modal" style="overflow-y: hidden !important;">
         <form method="POST" action="{{url('/').'/userProfile/changePassword'}}" accept-charset="UTF-8" enctype="multipart/form-data" id="userManagementPsswordForm" name="userManagementPsswordForm">
 
             {{ csrf_field() }}
@@ -253,7 +293,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <div class="input-field col m9 s12">                        
+                        <div class="input-field col m9 s12">
                             <a href="{{url("/").'/userProfile'}}" class="waves-effect waves-light btn right" title="Cancel">Cancel<i class="material-icons right">backspace</i></a>
                         </div>
                         <div class="input-field col m3 s12">

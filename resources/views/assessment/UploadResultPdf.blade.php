@@ -35,7 +35,7 @@
                     <div class="col m6 s12">
                         <div class="card-title ">
                             <h5 style="font-weight: bold;
-                                color: #8b62b5;">Upload Result</h5></div>
+                                color: #8b62b5;">Upload Assessment Result</h5></div>
                     </div>
                 </div>
             </div>
@@ -44,8 +44,8 @@
 
                     <div class="row">
                         {{ csrf_field() }}
-                        <div class="input-field col m12 s12">
 
+                        <div class="input-field col m12 s12">
                           <input type="file" id="input-file-now" class="dropify" name="result" />
                         </div>
                         </div>
