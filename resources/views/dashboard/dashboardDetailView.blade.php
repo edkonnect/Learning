@@ -15,18 +15,18 @@
                     <div class="col s12 m6 l4">
                         <div id="weekly-earning" class="card animate fadeUp" style="height: 310px;">
                             <div class="card-content">
-                                <p class="mb-0 mt-0 display-flex justify-content-between" style="font-weight: bold; font-size: 16px;">Proficiency Level</p>
+                                <p class="mb-0 mt-0 display-flex justify-content-between" style="font-weight: bold; font-size: 16px;">Proficiency </p>
                                 <div class="current-balance-container">
                                     <div id="proficiency-donut-chart" class="current-balance-shadow"></div>
                                 </div>
-                                <p class="medium-small center-align" id="proficiencyLevel" data-id='{{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}'>Proficiency Level - {{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}</p>
+                                <p class="medium-small center-align" id="proficiencyLevel" data-id='{{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}'>Proficiency  - {{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
                             <div class="card-content cyan white-text" >
-                                <p class="card-stats-title"> Assessment Test Taken</p>
+                                <p class="card-stats-title"> Assessment Taken</p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->assessmentTaken)?$studentAnalytics->assessmentTaken:''}}</h4>
                             </div>
 
@@ -35,7 +35,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
                             <div class="card-content red accent-2 white-text" >
-                                <p class="card-stats-title">No. of hours remaining in the course </p>
+                                <p class="card-stats-title">Hours Spent </p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_remaining)?$studentAnalytics->no_of_hours_remaining:''}}</h4>
                             </div>
 
@@ -59,7 +59,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
                             <div class="card-content green lighten-1 white-text" >
-                                <p class="card-stats-title"> Participation Rate</p>
+                                <p class="card-stats-title"> Participation</p>
                                 <h4 class="card-stats-number white-text">{{$participantCateg}}</h4>
                             </div>
 
@@ -68,7 +68,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
                             <div class="card-content orange lighten-1 white-text" >
-                                <p class="card-stats-title"> New Skills Acquired</p>
+                                <p class="card-stats-title"> New Skills </p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->newSkills)?$studentAnalytics->newSkills:''}}</h4>
                             </div>
 
