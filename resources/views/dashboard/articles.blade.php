@@ -45,7 +45,7 @@ use App\Models\LessonPlanDetails;
                     <div class="card-content">
                         <div id="dashboardData">
                             <div class="row">
-                                <div class="col s12 m4">
+                                <div class="col s12 m12">
                                     <div class="card recent-buyers-card animate fadeUp">
                                         <div class="row">
                                             <div class="card-action">
@@ -80,7 +80,7 @@ use App\Models\LessonPlanDetails;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col s12 m4">
+                                <div class="col s12 m12">
                                     <div class="card recent-buyers-card animate fadeUp">
                                         <div class="row">
                                             <div class="card-action">
@@ -115,7 +115,7 @@ use App\Models\LessonPlanDetails;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col s12 m4">
+                                <div class="col s12 m12">
                                     <div class="card recent-buyers-card animate fadeUp">
                                         <div class="row">
                                             <div class="card-action">
@@ -126,10 +126,10 @@ use App\Models\LessonPlanDetails;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-content">                            
+                                        <div class="card-content">
                                             @if(isset($customDashboardData['typeThree']))
                                             @foreach($customDashboardData['typeThree'] as $customDashboardDataKey=>$customDashboardDataVal)
-                                            <div class="row">                            
+                                            <div class="row">
                                                 <div class="col s12 m12 20">
                                                     <div class="card ">
                                                         <div class="card-content">

@@ -309,7 +309,7 @@ class DashboardController extends Controller {
             'student_id' => $request->student,
             'course_id' => $request->course,
             'proficiency_level'=> $request->performance,
-            'no_of_days_remaining'=> $request->no_of_hours,
+            'no_of_hours_remaining'=> $request->no_of_hours,
             'newSkills'=> $request->new_skills,
             'participation_rate'=> $request->participation_rate,
             'assessmentTaken'=> $request->assessment,

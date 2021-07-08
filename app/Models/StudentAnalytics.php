@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class StudentAnalytics extends Model {
 
   protected $table = 'student_analytics';
-  protected $fillable = [
-      'id',
-      'course_id',
-      'session_id',
-      'student_id',
-      'proficiency_level',
-      'no_of_days_remaining',
-      'no_of_days_used',
-      'participation_rate',
-      'newSkills',
-      'assessmentTaken',
-      'created_at',
-      'updated_at',
-  ];
+    protected $fillable = [
+        'id',
+        'course_id',
+        'session_id',
+        'student_id',
+        'proficiency_level',
+        'no_of_hours_remaining',
+        'no_of_days_used',
+        'participation_rate',
+        'newSkills',
+        'assessmentTaken',
+        'created_at',
+        'updated_at',
+    ];
 
 
     public function getStudentDetail() {
