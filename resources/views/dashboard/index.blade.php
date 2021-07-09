@@ -65,7 +65,7 @@ use App\Models\LessonPlanDetails;
                                 <select class="select2 browser-default" id="student" name="student" required="1" onchange="return getCourse(this.value);">
                                     @if(isset($getStudents))
                                     @foreach($getStudents as $key=>$val)
-                                    <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <option value="{{$key}}">{{strtoupper($val)}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -75,7 +75,7 @@ use App\Models\LessonPlanDetails;
                             <h5>Course</h5>
                             <div class="input-field">
                                 <select class="select2 browser-default" id="course" required="1" onchange="return getDashboardData(this.value);">
-                                    <option value="">Select Course</option>  
+                                    <option value="">Select Course</option>
 
                                 </select>
                             </div>
@@ -101,7 +101,7 @@ use App\Models\LessonPlanDetails;
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
-                            <div class="card-content cyan white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >                                
+                            <div class="card-content cyan white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> Assessment Taken</p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->assessmentTaken)?$studentAnalytics->assessmentTaken:''}}</h4>
                             </div>
@@ -109,9 +109,9 @@ use App\Models\LessonPlanDetails;
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
-                            <div class="card-content red accent-2 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
+                            <div class="card-content red accent-2 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> Hours Spent </p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_remaining)?$studentAnalytics->no_of_hours_remaining:''}}</h4>
+                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_spent)?$studentAnalytics->no_of_hours_spent:''}}</h4>
                             </div>
                         </div>
                     </div>
@@ -132,15 +132,15 @@ use App\Models\LessonPlanDetails;
                     ?>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
-                            <div class="card-content green lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
+                            <div class="card-content green lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> Participation </p>
                                 <h4 class="card-stats-number white-text">{{$participantCateg}}</h4>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
-                            <div class="card-content orange lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >   
+                            <div class="card-content orange lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> New Skills</p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->newSkills)?$studentAnalytics->newSkills:''}}</h4>
                             </div>
@@ -205,7 +205,7 @@ use App\Models\LessonPlanDetails;
                 <div class="card-content">
                     <div class="section section-data-tables">
                         <div class="row">
-                            <div class="col s12"> 
+                            <div class="col s12">
                                 <h5 style="font-weight: bold;
                                     color: #8b62b5;">Students List</h5></div>
                             @if(isset($getsessionData) && count($getsessionData) > 0)
@@ -236,7 +236,7 @@ use App\Models\LessonPlanDetails;
                     </div>
                 </div>
             </div>
-            <div class="card">                
+            <div class="card">
                 <div class="row">
                     <div class="card-action">
                         <div class="col m6 s12">
@@ -248,9 +248,9 @@ use App\Models\LessonPlanDetails;
                             <?php $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All"); ?>
                             <select class="select2 browser-default" id="timePeriod" name="timePeriod" onchange="return getNumberOfSession(this.value);">
                                 @if(isset($getStudents))
-                                <option value="">Select Time Period</option>  
+                                <option value="">Select Time Period</option>
                                 @foreach($getTimePeriod as $key=>$val)
-                                <option {{isset($key) && 2==$key ? 'selected' :''}} value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                <option {{isset($key) && 2==$key ? 'selected' :''}} value="{{$key}}">{{strtoupper($val)}}</option>
                                 @endforeach
                                 @endif
                             </select>
