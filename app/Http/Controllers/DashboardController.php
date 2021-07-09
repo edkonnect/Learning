@@ -12,8 +12,8 @@ use App\Models\CustomDashboardData;
 use App\Models\StudentAnalytics;
 use App\Models\Invoices;
 use App\Models\StudentSessionPerformance;
-use DB;
 use Carbon\Carbon;
+use DB;
 
 class DashboardController extends Controller {
 
@@ -28,7 +28,6 @@ class DashboardController extends Controller {
         $getUserData = User::find($userID);
         if (is_object($getUserData) && $getUserData->roles == '3' && $getUserData->status == 'Active') {
             $getStudents = Student::where(['parent_id' => $userID, 'status' => 'Active'])->pluck('name', 'id');
-        //  dd($getStudents);
             if (isset($getStudents)) {
                 $i = 0;
                 foreach ($getStudents as $studKey => $getStudentsVal) {
@@ -129,7 +128,7 @@ class DashboardController extends Controller {
         return $view;
     }
 
-    public function userProfile(Request $request) {
+   public function userProfile(Request $request) {
         $getCourseDetail = $studValArr = array();
         $getUserData = User::find(Auth::user()->id);
         if (isset($getUserData) && $getUserData->roles == '3') {
@@ -309,7 +308,7 @@ class DashboardController extends Controller {
             'student_id' => $request->student,
             'course_id' => $request->course,
             'proficiency_level'=> $request->performance,
-            'no_of_hours_remaining'=> $request->no_of_hours,
+            'no_of_hours_spent'=> $request->no_of_hours,
             'newSkills'=> $request->new_skills,
             'participation_rate'=> $request->participation_rate,
             'assessmentTaken'=> $request->assessment,
@@ -323,4 +322,4 @@ class DashboardController extends Controller {
     return Redirect()->back()->with('success','Student Analytics Updated Successfully');
     }
 
-}
+  }

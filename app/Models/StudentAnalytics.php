@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentAnalytics extends Model {
 
-  protected $table = 'student_analytics';
+     protected $table = 'student_analytics';
     protected $fillable = [
         'id',
         'course_id',
         'session_id',
         'student_id',
         'proficiency_level',
-        'no_of_hours_remaining',
+        'no_of_hours_spent',
         'no_of_days_used',
         'participation_rate',
         'newSkills',
@@ -21,8 +21,6 @@ class StudentAnalytics extends Model {
         'created_at',
         'updated_at',
     ];
-
-
     public function getStudentDetail() {
         return $this->belongsTo('App\Models\Student', 'student_id', 'id');
     }

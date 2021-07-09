@@ -45,7 +45,7 @@ public function AddStudent(){
   $tutor=2;
   $course = Course::all()->pluck('course_name','id');
   $tutor = User::all()->where('roles',$tutor)->pluck('name','id');
-  $user = User::all()->where('roles',$roles)->pluck('name','username');
+  $user = User::all()->where('roles',$roles)->pluck('name','id');
   //return $user;
   return view('RegisterUser.addStudent',compact('course','tutor','user'));
 }
@@ -87,9 +87,9 @@ $data=  Student::create([
     'firstName'    =>  $value['firstName'],
     'lastName'    =>  $value['lastName'],
     'name'    =>  $name,
-    'username'    =>  $value['username'],
+    //'username'    =>  $value['username'],
     'grade'    =>  $value['grade'],
-  //  'parent_id'    =>  $value['id'],
+    'parent_id'    =>  $value['username'],
 ]);
 $id=($data->id);
   StudentCourseTutor::create([
@@ -101,25 +101,10 @@ $id=($data->id);
 
 
   ]);
-//print_r($name);
-//$name =
-  //print_r($request->addMoreInputFields);
-//  exit();
-          // Student::create($value);
+
            $i++;
        }
-    //   exit();
-//$lastRecord = Student::latest()->first();
-       // foreach ($request->addMoreInputFields as $key => $value)
-       // {
-       //
-       //
-       //
-       //   //print_r($request->addMoreInputFields);
-       // //  exit();
-       //            StudentCourseTutor::create($value);
-       //        }
-       //        return redirect()->back();
+
        return redirect()->back()->with('success','Added Student Successfully');
 }
 
