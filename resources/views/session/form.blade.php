@@ -78,7 +78,7 @@
                 <form method="POST" action="{{url('/').'/tutor/storeSessionNotes'}}" accept-charset="UTF-8" enctype="multipart/form-data" id="tutorSessionNotesForm" name="tutorSessionNotesForm">
 
                     <div class="row">
-                        <div class="input-field col m12 s12"> 
+                        <div class="input-field col m12 s12">
                             <h10>Course <span style="color: red;">*</span></h10>
                             <select class="select2 browser-default" id="course" name="course" required onchange="return getStudents(this.value);">
                                 <option value="">Select Course</option>
@@ -92,28 +92,28 @@
                     </div>
                     <div class="row">
                         {{ csrf_field() }}
-                        <div class="input-field col m12 s12"> 
+                        <div class="input-field col m12 s12">
                             <h10>Student <span style="color: red;">*</span></h10>
                             <select class="select2 browser-default" multiple="multiple" id="student" name="student[]" onchange="return getCount(this.value);" required>
                             </select>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <div class="input-field col m2 s12" style="display:none;"> 
+                                <div class="input-field col m2 s12" style="display:none;">
                                     <label style="margin-left: 15px;">
                                         <input type="checkbox" id="checkbox" />
                                         <span>Select All</span>
                                     </label>
                                 </div>
                                 <div class="input-field col m3 s12">
-                                    <button type="button" id="cloneButton" class="waves-effect waves-light btn" style="background-color: #736cb5;display: none;" onclick="return setCloneData(this.value);"> 
-                                        Copy Notes                  
+                                    <button type="button" id="cloneButton" class="waves-effect waves-light btn" style="background-color: #736cb5;display: none;" onclick="return setCloneData(this.value);">
+                                        Copy Notes
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col m12 s12"> 
+                            <div class="input-field col m12 s12">
                                 <h10>Topic <span style="color: red;">*</span></h10>
                                 <select class="select2 browser-default" id="topic" name="topic" required onchange="return getLessonPlanDetails(this.value);">
                                     <option value="">Select Topic</option>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col m12 s12"> 
+                            <div class="input-field col m12 s12">
                                 <h10>Sub Topic</h10>
                                 <select class="select2 browser-default" id="subTopic" name="subTopic">
                                     <option value="">Select Sub-Topic</option>
@@ -140,22 +140,22 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col m12 s12">                                 
+                            <div class="input-field col m12 s12">
                                 <h10>Session Notes<span style="color: red;">*</span></h10>
                                 <textarea id="session_notes" name="session_notes" class="materialize-textarea" required="true" style="height: 80px !important;"></textarea>
                             </div>
-                        </div>                   
+                        </div>
 
                         <div class="row">
                             <h10 style="margin-left: 15px;">Homework Attachments</h10>
-                            <div class="input-field col m12 s12"> 
+                            <div class="input-field col m12 s12">
                                 <input type="text" name="fileSelected" value="" id="fileSelected" style="display:none;" readonly="true">
                                 <!--<input type="file" name="attachments[]" id="attachments" multiple="multiple"/>-->
                                 <a href="javascript:void(0);" class="waves-effect waves-light btn modal-trigger mb-2 mr-1" onclick="return getFiles();" style="background-color: #736cb5;border-radius: 50px;">Browse Files
-                                    <i class="material-icons right">attach_file</i>                                              
-                                </a>                                
+                                    <i class="material-icons right">attach_file</i>
+                                </a>
                                 <!--                                <a href="#browseFilesModal" class="waves-effect waves-light btn modal-trigger" style="background-color: #736cb5;border-radius: 50px;">Browse Files
-                                                                    <i class="material-icons right">attach_file</i>                                              
+                                                                    <i class="material-icons right">attach_file</i>
                                                                 </a>                                -->
                             </div>
                         </div>
@@ -163,13 +163,13 @@
                         <input type="hidden" id="browseFileType" name="browseFileType" />
                         <input type="hidden" id="selectedGrade" name="selectedGrade" />
                         <div class="row">
-                            <div class="input-field col m6 s6"> 
+                            <div class="input-field col m6 s6">
                                 <label>
                                     <input type="checkbox" id="isDelay" name="isDelay" />
                                     <span>Delay in Submitting Homework</span>
                                 </label>
                             </div>
-                            <div class="input-field col m6 s6"> 
+                            <div class="input-field col m6 s6">
                                 <label>
                                     <input type="checkbox" id="isDemo" name="demo" />
                                     <span>Demo</span>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="row" style="margin-top:50px;">
                             <div class="input-field col s12">
-                                <div class="input-field col m10 s12">                        
+                                <div class="input-field col m10 s12">
                                     <a href="{{url("/").'/post-session-notes'}}" class="waves-effect waves-light btn right" title="Cancel">Cancel<i class="material-icons right">backspace</i></a>
                                 </div>
                                 <div class="input-field col m2 s12">
@@ -192,7 +192,7 @@
             </div>
         </div>
     </div>
-    <div id="browseFilesModal" class="modal">            
+    <div id="browseFilesModal" class="modal">
         <form method="POST" action="javascript:void(0);" accept-charset="UTF-8" enctype="multipart/form-data" id="browseFilesModalForm" name="browseFilesModalForm">
 
             {{ csrf_field() }}
@@ -200,13 +200,13 @@
                 <h5 style="font-weight: bold;
                     color: #8b62b5;">Browse Files</h5>
                 <div class="row">
-                    <div class="input-field col m3 s6"> 
+                    <div class="input-field col m3 s6">
                         <label>
                             <input type="radio" id="myFiles" name="filesInput" checked="true" onclick="myTutorFiles();" />
                             <span>My Files</span>
                         </label>
                     </div>
-                    <div class="input-field col m3 s6"> 
+                    <div class="input-field col m3 s6">
                         <label>
                             <input type="radio" id="systemFiles" name="filesInput" onclick="systemfiles();"/>
                             <span>System Files</span>
@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="row" id="gradeDiv" style="display:none; margin-top: 60px;">
-                    <div class="input-field col m12 s12"> 
+                    <div class="input-field col m12 s12">
                         <h10>Grades <span style="color: red;">*</span></h10>
                         <select class="" id="grade" name="grade" onchange="return getSystemFiles(this.value);">
                             <option value="">Select Grade</option>
@@ -230,7 +230,7 @@
                 <div id="loadSystemFiles"></div>
                 <div class="row" style="margin-top:70px">
                     <div class="input-field col s12">
-                        <div class="input-field col m9 s12">                        
+                        <div class="input-field col m9 s12">
                             <a href="{{url("/").'/post-session-notes'}}" class="waves-effect waves-light btn right" title="Cancel">Cancel<i class="material-icons right">backspace</i></a>
                         </div>
                         <div class="input-field col m3 s12">
@@ -323,6 +323,7 @@
                                 var courseID = $("#course").val()
                                 if (count == 1) {
                                     $('#cloneButton').css('display', 'block');
+                                    var studentID = $("#student").val();
                                 } else {
                                     $('#cloneButton').css('display', 'none');
                                     $('#topic').html("");
@@ -331,7 +332,7 @@
                                     $.ajax({
                                         type: "post",
                                         url: '{{url("/")}}' + '/tutor/getLessonPlan',
-                                        data: {'course_id': courseID, '_token': '{{ csrf_token() }}'},
+                                        data: {'course_id': courseID, 'student_id': studentID,'_token': '{{ csrf_token() }}'},
                                         success: function (data) {
                                             $('#topic').html(data);
                                         }
@@ -437,6 +438,8 @@
                                         $('#student').html(data);
                                     }
                                 });
+
+
                                 $.ajax({
                                     type: "post",
                                     url: '{{url("/")}}' + '/tutor/getLessonPlan',
@@ -448,7 +451,7 @@
                             }
 </script>
 
-@endsection  
+@endsection
 {{-- vendor script --}}
 @section('vendor-script')
 <script src="{{asset('vendors/dropify/js/dropify.min.js')}}"></script>

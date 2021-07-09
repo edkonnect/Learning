@@ -11,6 +11,7 @@ use App\Models\StudentSession;
 use App\Models\LessonPlan;
 use App\Models\LessonPlanDetails;
 use App\Models\TutorCourse;
+use App\Models\StudentLessonTutorAssignment;
 use App\Models\TutorHWAttachment;
 use Illuminate\Http\Request;
 use Auth;
@@ -250,8 +251,16 @@ class SessionController extends Controller {
 
     public function getLessonPlan(Request $request) {
         $courseID = $request->course_id;
+        $studentID = $request->student_id;
+
         $data = '';
-        $getLessonDetail = LessonPlan::where(['course_id' => $courseID, 'status' => 'Active'])->orderBy('topic_name', 'ASC')->get();
+        // $getLessonDetail =  DB::table('lesson_plan')
+        //       ->leftjoin('student_lesson_tutor_assignment AS B', 'B.lesson_id', '=','lesson_plan.id')
+        //       ->select('lesson_plan.id','lesson_plan.topic_name')
+        //       ->where('B.student_id',$studentID)
+        //       ->where('B.course_id',$courseID)
+        //       ->get();
+        $getLessonDetail = LessonPlan::where(['course_id' => $courseID, 'status' => 'Active'])->groupBy('topic_name')->get();
         $data .= "<option value=''>Select Topic</option>";
         foreach ($getLessonDetail as $key => $val) {
             $data .= "<option value=" . $val->id . ">" . strtoupper($val->topic_name) . "</option>";
