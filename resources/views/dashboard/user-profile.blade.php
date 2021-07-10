@@ -120,7 +120,7 @@
                                                 <tbody>
                                                     @foreach($getCourseDetail as $getCourseDetailKey=>$getCourseDetailVal)
                                                     <?php // echo '<pre>'; print_r($getCourseDetailVal); die;
-                                                  if (isset($getCourseDetailVal->getStudentDetail->grade)) {
+                                                    if (isset($getCourseDetailVal->getStudentDetail->grade)) {
                                                       if ($getCourseDetailVal->getStudentDetail->grade == 'GR1') {
                                                           $grade = 'Grade 1';
                                                       }
