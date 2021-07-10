@@ -35,7 +35,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
                             <div class="card-content red accent-2 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
-                                <p class="card-stats-title"> Hours Spent  </p>
+                                <p class="card-stats-title">Hours Spent  </p>
                                 <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_spent)?$studentAnalytics->no_of_hours_spent:''}}</h4>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
                             <div class="card-content green lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
-                                <p class="card-stats-title"> Participation </p>
+                                <p class="card-stats-title"> Participation</p>
                                 <h4 class="card-stats-number white-text">{{$participantCateg}}</h4>
                             </div>
                         </div>
