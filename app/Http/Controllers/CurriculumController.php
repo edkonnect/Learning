@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\StudentLessonTutorAssignment;
 use App\Models\LessonPlan;
 use Carbon\Carbon;
+use App\Models\StudentCourseTutor;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -23,8 +24,13 @@ class CurriculumController extends Controller{
           $request->student;
           $course = $request->course;
               $Students = Student::All()->pluck('name', 'id');
-              $Courses = Course::All()->pluck('course_name','id');
-              $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
+              $studentID = $request->stud_id;
+              $data = '';
+              $Courses = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
+              $data .= "<option value=''>Select Course</option>";
+              foreach ($Courses as $key => $val) {
+                  $data .= "<option value=" . $val->$Courses->id . ">" . $val->$Courses->course_name . "</option>";
+              }              $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
 
             //   }
 //else {

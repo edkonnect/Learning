@@ -117,7 +117,7 @@ use App\Models\Course;
                                   </div>
                               </div>
                                   <div class="col m6 s12">
-                                      <h5>No.of Hours Remaining</h5>
+                                      <h5>No.of Hours Spent</h5>
                                       <div class="input-field">
                                           <input type="text"  name ="no_of_hours"></input>
 
