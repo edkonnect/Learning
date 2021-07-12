@@ -18,7 +18,12 @@ class Assessment extends Model
       'description',
       'assmt_url',
       'status',
+      'location',
       'result_pdf',
+      'assessment_taken_date',
+      'points',
+      'created_at',
+      'updated_at',
 
   ];
   public function student(){

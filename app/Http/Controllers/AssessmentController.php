@@ -176,18 +176,24 @@ public function UploadResultPdf($id){
 
 public function StoreResult(Request $request, $id){
   $result_pdf=  $request->file('result');
+  $points=  $request->points;
+  $date=  $request->date;
+
   $status =1;
 
           $name_gen = hexdec(uniqid());
           $ext = strtolower($result_pdf->getClientOriginalExtension());
           $name = $name_gen.'.'.$ext;
-          $up_location = 'internal/uploads/assessments';
-          $last = $up_location.$name;
+          $up_location = 'internal/uploads/assessments/';
+
           $result_pdf->move($up_location,$name);
 
           Assessment::find($id)->update([
               'status' => $status,
-              'result_pdf' => $last,
+              'location'=>$up_location,
+              'result_pdf' => $name,
+              'points'=>$points,
+              'assessment_taken_date'=>$date,
               'created_at' => Carbon::now()
           ]);
 
@@ -195,6 +201,4 @@ public function StoreResult(Request $request, $id){
           return Redirect('upload-result')->with('success','Result Uploaded Successfully');
 
 }
-
-
 }
