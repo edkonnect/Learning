@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- Page title --}}
-@section('title','Edit Send Message')
+@section('title','Upload Assessment Result')
 
 @section('vendor-style')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
@@ -44,11 +44,27 @@
 
                     <div class="row">
                         {{ csrf_field() }}
-
                         <div class="input-field col m12 s12">
+                          <h5>Upload Result Pdf</h5>
+
                           <input type="file" id="input-file-now" class="dropify" name="result" />
                         </div>
-                        </div>
+                      </div>
+                      <div class="row">
+                            {{ csrf_field() }}
+                            <div class="input-field col m6 s12">
+                                   <h5>Assessment Taken Date</h5>
+                              <input type="date"  class="form-control" name="date" />
+                            </div>
+                            {{ csrf_field() }}
+
+                            <div class="input-field col m6 s12">
+                                   <h5>Total Points</h5>
+                              <input type="text"  class="form-control" name="points" />
+                            </div>
+
+
+                            </div>
 
                     <div class="row">
                         <div class="input-field col s12">
