@@ -45,9 +45,7 @@ use App\Models\Course;
                       <div class="row">
                           <div class="col m6 s12">
                               <div class="input-field">
-                                <a href="" class="waves-effect waves-light btn" style="background-color: #736cb5;">
-                                  View Completed Assessments
-                                </a>
+                                
                               </div>
                           </div>
                         </div>
