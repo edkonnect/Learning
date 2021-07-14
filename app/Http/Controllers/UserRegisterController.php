@@ -47,7 +47,7 @@ public function AddStudent(){
   $tutor = User::all()->where('roles',$tutor)->pluck('name','id');
   $user = User::all()->where('roles',$roles)->pluck('name','id');
   //return $user;
-  return view('RegisterUser.addStudent',compact('course','tutor','user'));
+return view('RegisterUser.addStudent',compact('course','tutor','user'));
 }
 public function SaveStudent(Request $request){
 // //  $inputs = $request->all();
@@ -86,10 +86,12 @@ $name = $value['firstName']."  ".$value['lastName'];
 $data=  Student::create([
     'firstName'    =>  $value['firstName'],
     'lastName'    =>  $value['lastName'],
-    'name'    =>  $name,
+    'name'        =>  $name,
+  'parent_id'    =>  $value['username'],
+
     //'username'    =>  $value['username'],
     'grade'    =>  $value['grade'],
-    'parent_id'    =>  $value['username'],
+  //  'parent_id'    =>  $value['username'],
 ]);
 $id=($data->id);
   StudentCourseTutor::create([
