@@ -75,6 +75,9 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('/assessment', 'AssessmentController@index');
     Route::any('/assessment/assessments','AssessmentController@getAssessment');
     Route::any('/assessment/test/{id}','AssessmentController@assessmentTest');
+    Route::any('/assessment/completed','AssessmentController@CompletedAssessment');
+  Route::any('/assessment/completedView','AssessmentController@CompletedAssessmentView');
+
 
     Route::any('/printables', 'PrintablesController@index');
     Route::any('/printables/getTopics', 'PrintablesController@getTopics');
