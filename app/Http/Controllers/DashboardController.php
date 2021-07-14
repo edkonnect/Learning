@@ -290,12 +290,20 @@ class DashboardController extends Controller {
           $Students = Student::All()->pluck('name', 'id');
           $studentID = $request->stud_id;
           $data = '';
+          $userID = Auth::user()->id;
+          $getUserData = User::find($userID);
+          if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+           {
           $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
           $data .= "<option value=''>Select Course</option>";
           foreach ($getCourseDetail as $key => $val) {
               $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
           }
+}
+else{
+  return view('/pages/page-404');
 
+}
 
 
 

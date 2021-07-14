@@ -17,7 +17,16 @@ use Illuminate\Http\Request;
 class UserRegisterController extends Controller
 {
   public function index(){
+    $userID = Auth::user()->id;
+    $getUserData = User::find($userID);
+    if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+     {
     return view('RegisterUser.index');
+  }
+  else{
+    return view('/pages/page-404');
+
+  }
   }
 public function StoreUser(Request $request){
 
@@ -43,9 +52,18 @@ public function StoreUser(Request $request){
 public function AddStudent(){
   $roles =3;
   $tutor=2;
+  $userID = Auth::user()->id;
+  $getUserData = User::find($userID);
+  if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+   {
   $course = Course::all()->pluck('course_name','id');
   $tutor = User::all()->where('roles',$tutor)->pluck('name','id');
   $user = User::all()->where('roles',$roles)->pluck('name','id');
+}
+else{
+  return view('/pages/page-404');
+
+}
   //return $user;
 return view('RegisterUser.addStudent',compact('course','tutor','user'));
 }

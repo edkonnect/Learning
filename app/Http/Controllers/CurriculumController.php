@@ -17,7 +17,7 @@ class CurriculumController extends Controller{
       $userID = Auth::user()->id;
       $getUserData = User::find($userID);
 
-      //if (is_object($getUserData) && $getUserData->roles == '2'  && $getUserData->status == 'Active') {
+      if (is_object($getUserData) && $getUserData->roles == '2'  && $getUserData->status == 'Active') {
 
           $pageConfigs = ['bodyCustomClass' => 'app-page'];
 
@@ -32,10 +32,10 @@ class CurriculumController extends Controller{
                   $data .= "<option value=" . $val->$Courses->id . ">" . $val->$Courses->course_name . "</option>";
               }              $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
 
-            //   }
-//else {
-  //return view('/pages/page-404');
-//}
+               }
+else {
+  return view('/pages/page-404');
+}
       return view('curriculum.index', ['pageConfigs' => $pageConfigs, 'Students' => $Students, 'Courses' => $Courses,'lesson'=>$lesson]);
 }
 
@@ -46,6 +46,10 @@ class CurriculumController extends Controller{
 
    $student = $request->student;
    $course = $request->course;
+   $userID = Auth::user()->id;
+   $getUserData = User::find($userID);
+   if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+    {
    $res =  DB::table('lesson_plan')
          ->leftjoin('student_lesson_tutor_assignment AS B', 'B.lesson_id', '=','lesson_plan.id')
          ->select('lesson_plan.id','lesson_plan.topic_name')
@@ -54,7 +58,11 @@ class CurriculumController extends Controller{
          ->get();
 
   $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
+}
+else{
+  return view('/pages/page-404');
 
+}
  return view('curriculum.getCurriculum', ['pageConfigs' => $pageConfigs, 'lesson'=>$lesson,'res'=>$res]);
 
  }
@@ -81,8 +89,16 @@ return Redirect()->back()->with('success','Curriculum Updated Successfully');
 
 
 public function createLesson(){
-
+  $userID = Auth::user()->id;
+  $getUserData = User::find($userID);
+  if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+   {
       $Courses = Course::All()->pluck('course_name','id');
+    }
+    else{
+      return view('/pages/page-404');
+
+    }
       return view('curriculum.createLesson',compact('Courses'));
 }
 

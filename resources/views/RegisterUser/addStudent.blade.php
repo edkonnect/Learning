@@ -75,8 +75,7 @@ use App\Models\Course;
       @endif
                       <form method="post" action="{{ url('/save-student') }}">
                        {{ csrf_field() }}
-
-                <table class="table table-borderless" sytle="border:0px !important;" id="dynamicAddRemove">
+<table class="table table-borderless" sytle="border:0px !important;" id="dynamicAddRemove">
                      <tbody>
                      <tr >
                        <td>
