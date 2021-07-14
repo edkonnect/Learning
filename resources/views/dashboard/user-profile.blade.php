@@ -165,7 +165,7 @@
                                                         <td>{{$grade}}</td>
                                                         <td>{{isset($getCourseDetailVal->getCourseDetail->course_name)?$getCourseDetailVal->getCourseDetail->course_name:''}}</td>
                                                         <td>{{isset($getCourseDetailVal->subscription)?$getCourseDetailVal->subscription:''}}</td>
-                                                        <td>{{isset($getCourseDetailVal->end_date)?date('l jS \of F Y h:i:s A',strtotime($getCourseDetailVal->end_date)):''}}</td>
+                                                        <td>{{isset($getCourseDetailVal->eff_date)?date('l jS \of F Y h:i:s A',strtotime($getCourseDetailVal->eff_date)):''}}</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

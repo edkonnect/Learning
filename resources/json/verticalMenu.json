@@ -54,14 +54,28 @@
             ]
         },
         {
-            "url": "assessment",
-            "name": "Assessment Test",
-            "i18n": "Assessment Test",
-            "class": "waves-effect waves-cyan",
-            "icon": "chrome_reader_mode",
-            "slug": "assessment-test",
-            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-        },
+                "url": "javascript:void(0)",
+                "name": "Assessment Test",
+                "i18n": "Assessments",
+                "class": "collapsible-header waves-effect waves-cyan customClass",
+                "slug": "app-invoice",
+                "icon": "assessment",
+                "submenu": [
+                    {
+                        "url": "assessment",
+                        "name": "Take Assessment",
+                        "i18n": " Take Assessment",
+                        "slug": "assessment"
+              },
+              {
+                        "url": "assessment/completed",
+                        "name": "View Result",
+                        "i18n": "View Result",
+                        "slug": "view result"
+                    }
+                ]
+                    },
+            
         {
             "url": "quizes",
             "name": "Quizlet",
@@ -161,7 +175,7 @@
             }
         ]
             },
-          
+
       {
     "url": "assign-curriculum",
     "name": "Assign Curriculum",

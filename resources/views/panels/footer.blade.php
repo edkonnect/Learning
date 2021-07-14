@@ -6,9 +6,7 @@
       <span>&copy; 2021 <a href="https://edkonnect.com/"
           target="_blank">EDKONNECT</a> All rights reserved.
       </span>
-      <span class="right hide-on-small-only">
-          Design and Developed by <a target="_blank" href="https://www.egrovesys.com/">EGROVESYS</a>
-      </span>
+    
     </div>
   </div>
 </footer>

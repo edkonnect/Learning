@@ -151,6 +151,8 @@ return [
     "Printables"=>"Printables",
     "Assessment Test"=>"Assessment Test",
     "Assessment Test"=>"Assessment Test",
+    "Take Assessment"=>"Take Assessment",
+  "View Result"=>"View Result",
     "Grade 7 & 10 (ELA) Docs"=>"Grade 7 & 10 (ELA) Docs",
     "Grade 7 & 8 (Math) Docs"=>"Grade 7 & 8 (Math) Docs",
     "Upload System Files"=>"Upload System Files",
