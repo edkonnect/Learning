@@ -80,12 +80,12 @@ use App\Models\Course;
                      <tbody>
                      <tr >
                        <td>
-                      <select   class="select2 browser-default" name="addMoreInputFields[0][username]"  id="username"  required="1" >
-                   <option value="">Select Parent</option>
-                       @foreach($user as $key=>$val)
-                          <option value="{{$val}}">{{strtoupper($val)}}
-                                 </option>
-                                @endforeach
+
+                                <select name ="addMoreInputFields[0][username]" class="select2 browser-default">
+                                  <option value="">Select Parent</option>
+                                  @foreach($user as $key=>$val)
+                                  <option value="{{$key}}">{{$val}}</option>
+                                  @endforeach
 
                      </select></td>
                          <td><input type="text" name="addMoreInputFields[0][firstName]" placeholder="Enter First Name" class="form-control" />
