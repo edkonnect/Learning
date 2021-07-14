@@ -75,7 +75,7 @@
                     }
                 ]
                     },
-            
+
         {
             "url": "quizes",
             "name": "Quizlet",
@@ -120,81 +120,7 @@
             "icon": "cast",
             "slug": "articles",
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-        },
-
-  {
-          "url": "javascript:void(0)",
-          "name": "Register User",
-          "i18n": "Register User",
-          "class": "collapsible-header waves-effect waves-cyan customClass",
-          "slug": "app-invoice",
-          "icon": "",
-          "submenu": [
-              {
-                  "url": "register-user",
-                  "name": "Add User",
-                  "i18n": "Add User",
-                  "slug": "register-user"
-      },
-      {
-                  "url": "add-student",
-                  "name": "Add Student",
-                  "i18n": "Add Student",
-                  "slug": "add-student"
-              }
-          ]
-      },
-      {
-          "url": "student-analytics",
-          "name": "Student Analytics",
-          "i18n": "Student Analytics",
-          "class": "waves-effect waves-cyan",
-          "icon": "receipt",
-          "slug": "student-analytics",
-          "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-      },
-      {
-        "url": "javascript:void(0)",
-        "name": "Assessments",
-        "i18n": "Assessments",
-        "class": "collapsible-header waves-effect waves-cyan customClass",
-        "slug": "app-invoice",
-        "icon": "assessment",
-        "submenu": [
-            {
-                "url": "add-assessment",
-                "name": "Add Assessment",
-                "i18n": "Add Assessment",
-                "slug": "add-assessment"
-      },
-      {
-                "url": "upload-result",
-                "name": "Upload Result",
-                "i18n": "Upload Result",
-                "slug": "upload result"
-            }
-        ]
-            },
-
-      {
-    "url": "assign-curriculum",
-    "name": "Assign Curriculum",
-    "i18n": "Assign Curriculum",
-    "class": "waves-effect waves-cyan",
-    "icon": "content_paste",
-    "slug": "assign-curriculum",
-    "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-    },
-  {
-      "url": "create-curriculum",
-      "name": "Create Curriculum",
-      "i18n": "CreateCurriculum",
-      "class": "waves-effect waves-cyan",
-      "icon": "content_paste",
-      "slug": "crete-curriculum",
-      "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-  }
-
+        }
 
     ]
 }

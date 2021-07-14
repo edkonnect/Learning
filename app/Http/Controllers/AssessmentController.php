@@ -100,12 +100,20 @@ public function addAssessment(Request $request){
       $Students = Student::All()->pluck('name', 'id');
       $studentID = $request->stud_id;
       $data = '';
+      $userID = Auth::user()->id;
+      $getUserData = User::find($userID);
+      if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+       {
+
       $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
       $data .= "<option value=''>Select Course</option>";
       foreach ($getCourseDetail as $key => $val) {
           $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
       }
-
+        }
+    else {
+        return view('/pages/page-404');
+    }
 
 return view('assessment.addAssessment', ['pageConfigs' => $pageConfigs, 'Students' => $Students,'data'=>$data]);
 }
@@ -133,12 +141,21 @@ public function saveAssessment(Request $request){
       $getStudents = Student::All()->pluck('name', 'id');
       $studentID = $request->stud_id;
       $data = '';
+      $userID = Auth::user()->id;
+      $getUserData = User::find($userID);
+      if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+       {
       $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
       $data .= "<option value=''>Select Course</option>";
       foreach ($getCourseDetail as $key => $val) {
           $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
       }
+
       $getAssessment = Assessment::All();
+}
+  else {
+      return view('/pages/page-404');
+  }
 
 return view('assessment.uploadResult', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents,'data'=>$data,'getAssessment'=>$getAssessment]);
 }
@@ -148,6 +165,10 @@ public function AssessmentResult(Request $request){
   $studentID = $request->studentID;
   $courseID = $request->course;
   $getStudents = $getAssessment = array();
+  $userID = Auth::user()->id;
+  $getUserData = User::find($userID);
+  if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
+   {
       $getStudents = Student::where( ['status' => 'Active'])->pluck('name', 'id');
       if (isset($getStudents)) {
           $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
@@ -164,7 +185,11 @@ public function AssessmentResult(Request $request){
           $getAssessment = Assessment::where(['student_id' => $studentID, 'course_id' => $courseID])->get();
 
   }
+}
+else{
+  return view('/pages/page-404');
 
+}
   $view= view('assessment.AssessmentResult', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents, 'getAssessment' => $getAssessment, 'data' => $data])->render();
    return $view;
 }
@@ -210,7 +235,8 @@ public function CompletedAssessment(Request $request){
   $userID = Auth::user()->id;
   $data = $courseID = '';
   $getUserData = User::find($userID);
-  if (is_object($getUserData) && $getUserData->roles == '3' && $getUserData->status == 'Active') {
+  if (is_object($getUserData) && $getUserData->roles == '3' && $getUserData->status == 'Active')
+  {
       $getStudents = Student::where(['parent_id' => $userID, 'status' => 'Active'])->pluck('name', 'id');
       if (isset($getStudents)) {
           $i = 0;
