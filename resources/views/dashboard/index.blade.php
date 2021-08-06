@@ -88,34 +88,47 @@ use App\Models\LessonPlanDetails;
             <!-- Current balance & total transactions cards-->
             <div id="card-stats" class="pt-0">
                 <div class="row">
+
                     <div class="col s12 m6 l4">
                         <div id="weekly-earning" class="card animate fadeUp">
                             <div class="card-content" style="box-shadow: 1px 2px 10px #999;">
-                                <p class="mb-0 mt-0 display-flex justify-content-between" style="font-weight: bold; font-size: 16px;">Proficiency </p>
+                                <p class="mb-0 mt-0 display-flex justify-content-between" style="font-weight: bold; font-size: 16px;">Proficiency</p>
                                 <div class="current-balance-container">
                                     <div id="proficiency-donut-chart" class="current-balance-shadow"></div>
                                 </div>
-                                <p class="medium-small center-align" id="proficiencyLevel" data-id='{{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}'>Proficiency  - {{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}</p>
+                                <p class="medium-small center-align" id="proficiencyLevel" data-id='{{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}'>Proficiency - {{isset($studentAnalytics->proficiency_level)?$studentAnalytics->proficiency_level:''}}</p>
                             </div>
                         </div>
                     </div>
+                    <?php
+                    if(isset($assessment)){
+                      if($assessment==0){
+                        $assessment ='NA';
+                      }
+                    }?>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
                             <div class="card-content cyan white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> Assessment Taken</p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->assessmentTaken)?$studentAnalytics->assessmentTaken:''}}</h4>
+                                <h4 class="card-stats-number white-text">{{$assessment}}</h4>
                             </div>
                         </div>
                     </div>
+                    <?php
+                    if(isset($hours)){
+                      if($hours==0){
+                        $hours ='NA';
+                      }
+                    }?>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeLeft">
                             <div class="card-content red accent-2 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
-                                <p class="card-stats-title">Hours Spent </p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->no_of_hours_spent)?$studentAnalytics->no_of_hours_spent:''}}</h4>
+                                <p class="card-stats-title"> Hours Spent  </p>
+                                <h4 class="card-stats-number white-text">{{$hours}}</h4>
                             </div>
                         </div>
                     </div>
-
+{{--
                     <?php
                     $participantCateg = '';
                     if (isset($studentAnalytics->participation_rate)) {
@@ -129,20 +142,26 @@ use App\Models\LessonPlanDetails;
                             $participantCateg = 'Perfect';
                         }
                     }
-                    ?>
+                    ?>--}}
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
                             <div class="card-content green lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> Participation</p>
-                                <h4 class="card-stats-number white-text">{{$participantCateg}}</h4>
+                                <h4 class="card-stats-number white-text">Perfect</h4>
                             </div>
                         </div>
                     </div>
+                    <?php
+                    if(isset($skill)){
+                      if($skill==0){
+                        $skill ='NA';
+                      }
+                    }?>
                     <div class="col s12 m6 l4">
                         <div class="card animate fadeRight">
                             <div class="card-content orange lighten-1 white-text" style="border-radius: 4px;;box-shadow: 1px 2px 10px #999;" >
                                 <p class="card-stats-title"> New Skills </p>
-                                <h4 class="card-stats-number white-text">{{isset($studentAnalytics->newSkills)?$studentAnalytics->newSkills:''}}</h4>
+                                <h4 class="card-stats-number white-text">{{$skill}}</h4>
                             </div>
                         </div>
                     </div>
@@ -296,7 +315,7 @@ use App\Models\LessonPlanDetails;
     @endif
     @include('pages.intro')
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
                                 $(document).ready(function () {
                                 @if (isset($data))

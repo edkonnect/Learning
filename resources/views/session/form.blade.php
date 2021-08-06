@@ -12,8 +12,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2-materialize.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/dropify/css/dropify.min.css')}}">
-
 <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
 @endsection
 
 
@@ -75,8 +75,10 @@
                 </div>
             </div>
             <div class="card-content">
-                <form method="POST" action="{{url('/').'/tutor/storeSessionNotes'}}" accept-charset="UTF-8" enctype="multipart/form-data" id="tutorSessionNotesForm" name="tutorSessionNotesForm">
 
+                  <form method="POST" action="{{ url('/tutor/storeSessionNotes')  }}"  accept-charset="UTF-8" enctype="multipart/form-data" d="tutorSessionNotesForm" name="tutorSessionNotesForm">
+
+            {{ csrf_field() }}
                     <div class="row">
                         <div class="input-field col m12 s12">
                             <h10>Course <span style="color: red;">*</span></h10>
@@ -84,12 +86,27 @@
                                 <option value="">Select Course</option>
                                 @if(isset($getCourse))
                                 @foreach($getCourse as $key=>$val)
-                                <option {{isset($getData->reason_id) && $getData->reason_id== $key?'selected':''}} value="{{$key}}">{{$val}}</option>
+                                <option value="{{$key}}">{{$val}}</option>
                                 @endforeach
                                 @endif
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="input-field col m12 s12" >
+                                <label style="margin-left: 15px;">
+                                    <input type="checkbox" id="checkbox" />
+                                    <span>Show All Student</span>
+                                </label>
+                            </div>
+                          </div>
+                        </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+
+                                    </div>
+                                  </div>
                     <div class="row">
                         {{ csrf_field() }}
                         <div class="input-field col m12 s12">
@@ -97,21 +114,13 @@
                             <select class="select2 browser-default" multiple="multiple" id="student" name="student[]" onchange="return getCount(this.value);" required>
                             </select>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <div class="input-field col m2 s12" style="display:none;">
-                                    <label style="margin-left: 15px;">
-                                        <input type="checkbox" id="checkbox" />
-                                        <span>Select All</span>
-                                    </label>
-                                </div>
+
                                 <div class="input-field col m3 s12">
                                     <button type="button" id="cloneButton" class="waves-effect waves-light btn" style="background-color: #736cb5;display: none;" onclick="return setCloneData(this.value);">
                                         Copy Notes
                                     </button>
                                 </div>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="input-field col m12 s12">
                                 <h10>Topic <span style="color: red;">*</span></h10>
@@ -202,13 +211,13 @@
                 <div class="row">
                     <div class="input-field col m3 s6">
                         <label>
-                            <input type="radio" id="myFiles" name="filesInput" checked="true" onclick="myTutorFiles();" />
+                            <input type="radio" id="myFiles" name="filesInput" checked="true" value="file1" onclick="myTutorFiles();" />
                             <span>My Files</span>
                         </label>
                     </div>
                     <div class="input-field col m3 s6">
                         <label>
-                            <input type="radio" id="systemFiles" name="filesInput" onclick="systemfiles();"/>
+                            <input type="radio" id="systemFiles" name="filesInput" value="file2" onclick="systemfiles();"/>
                             <span>System Files</span>
                         </label>
                     </div>
@@ -300,12 +309,7 @@
                                     data: {'studID': studID, '_token': '{{ csrf_token() }}'},
                                     success: function (data) {
                                         var resultData = JSON.parse(data);
-                                        if (resultData.topic != '') {
-                                            $('#topic').html(resultData.topic);
-                                        }
-                                        if (resultData.subTopic != '') {
-                                            $('#subTopic').html(resultData.subTopic);
-                                        }
+
                                         if (resultData.sessionNotes != '') {
                                             $('#session_notes').html(resultData.sessionNotes);
                                         }
@@ -324,11 +328,6 @@
                                 if (count == 1) {
                                     $('#cloneButton').css('display', 'block');
                                     var studentID = $("#student").val();
-                                } else {
-                                    $('#cloneButton').css('display', 'none');
-                                    $('#topic').html("");
-                                    $('#subTopic').html("");
-                                    $('#session_notes').html("");
                                     $.ajax({
                                         type: "post",
                                         url: '{{url("/")}}' + '/tutor/getLessonPlan',
@@ -337,20 +336,30 @@
                                             $('#topic').html(data);
                                         }
                                     });
+
+                                } else {
+                                    $('#cloneButton').css('display', 'none');
+                                    $('#topic').html("");
+                                    $('#subTopic').html("");
+                                    $('#session_notes').html("");
+                                    $.ajax({
+                                        type: "post",
+                                        url: '{{url("/")}}' + '/tutor/getLessonPlans',
+                                        data: {'course_id': courseID,'_token': '{{ csrf_token() }}'},
+                                        success: function (data) {
+                                            $('#topic').html(data);
+                                        }
+                                    });
                                 }
                             }
                             ;
-                            $("#checkbox").click(function () {
-                                if ($("#checkbox").is(':checked')) {
-                                    $("#student > option").prop("selected", "selected");
-                                    $("#student").trigger("change");
-                                } else {
-                                    $("#student > option").prop("selected", false);
-                                    $("#student").trigger("change");
-                                }
-                            });
+
 
                             $("#browseFilesModalForm").on("submit", function (e) {
+                              var filesTypeVal = $('#filesType').val();
+                              var getGradeVal = $('#grade').val();
+                             $("#browseFileType").val(filesTypeVal);
+                              $("#selectedGrade").val(getGradeVal);
                                 if ($('#filesType').val() == '1') {
                                     if ($('input[name="myFilesNameSelect"]:checked').length == 0) {
                                         swal({
@@ -386,15 +395,18 @@
                                         $('#fileSelected').css('display', 'block');
                                         $('#browseFilesModal').modal('close');
                                     }
+
+
                                 }
                             });
                             $("#tutorSessionNotesForm").on("submit", function (e) {
                                 e.preventDefault();
                                 var filesTypeVal = $('#filesType').val();
                                 var getGradeVal = $('#grade').val();
-                                $("#browseFileType").val(filesTypeVal);
+                               $("#browseFileType").val(filesTypeVal);
                                 $("#selectedGrade").val(getGradeVal);
                                 var formData = new FormData($(this)[0]);
+
                                 $.ajax({
                                     url: $(this).attr('action'),
                                     type: "POST",
@@ -423,13 +435,7 @@
                                 });
                             }
                             function getStudents(val) {
-                                $('#student').html("");
-                                $('#topic').html("");
-                                $('#subTopic').html("");
-                                $('#session_notes').html("");
-                                if ($("#checkbox").is(':checked')) {
-                                    $("#checkbox").prop('checked', false);
-                                }
+
                                 $.ajax({
                                     type: "post",
                                     url: '{{url("/")}}' + '/tutor/getStudents',
@@ -439,16 +445,19 @@
                                     }
                                 });
 
-
-                                $.ajax({
-                                    type: "post",
-                                    url: '{{url("/")}}' + '/tutor/getLessonPlan',
-                                    data: {'course_id': val, '_token': '{{ csrf_token() }}'},
-                                    success: function (data) {
-                                        $('#topic').html(data);
-                                    }
+                                $("#checkbox").click(function () {
+                                  $.ajax({
+                                      type: "post",
+                                      url: '{{url("/")}}' + '/tutor/getAllStudents',
+                                      data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                      success: function (data) {
+                                          $('#student').html(data);
+                                      }
+                                  });
                                 });
+
                             }
+
 </script>
 
 @endsection
@@ -460,9 +469,9 @@
 
 {{-- page script --}}
 @section('page-script')
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.0/js/fileinput.min.js"></script>
 
 <script src="{{asset('js/scripts/form-select2.js')}}"></script>
+<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
 <script src="{{asset('js/scripts/advance-ui-modals.js')}}"></script>
 <script src="{{asset('js/scripts/form-file-uploads.js')}}"></script>

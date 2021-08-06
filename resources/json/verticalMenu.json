@@ -47,8 +47,8 @@
         },
         {
                     "url": "homework-upload",
-                    "name": "Homework Upload",
-                    "i18n": "Homework Upload",
+                    "name": "Upload Homework",
+                    "i18n": "Upload Homework",
                     "slug": "homework-upload"
                 }
             ]
@@ -56,8 +56,8 @@
         {
                 "url": "javascript:void(0)",
                 "name": "Assessment Test",
-                "i18n": "Assessments",
-                "class": "collapsible-header waves-effect waves-cyan customClass",
+                "i18n": "Assessment Test",
+                "class": "collapsible-header waves-effect waves-cyan",
                 "slug": "app-invoice",
                 "icon": "assessment",
                 "submenu": [
@@ -120,7 +120,15 @@
             "icon": "cast",
             "slug": "articles",
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "satEnglish",
+            "name": "SAT English",
+            "i18n": "SAT English",
+            "class": "waves-effect waves-cyan",
+            "icon": "insert_drive_file",
+            "slug": "satEnglish",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
         }
-
     ]
 }

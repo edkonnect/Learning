@@ -36,10 +36,9 @@
                             <div class="col m3 float-right">
                                 <?php $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All"); ?>
                                 <select class="select2 browser-default" id="timePeriod" name="timePeriod" onchange="return getHomeworkList(this.value);">
-                                    @if(isset($getStudents))
-                                    <option value="">Select Time Period</option>  
+                                    @if(isset($getCourse))
                                     @foreach($getTimePeriod as $key=>$val)
-                                    <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <option value="{{$key}}">{{($val)}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -50,31 +49,43 @@
 
                         <div class="row">
                             <div class="col m6 s12">
-                                <h5>Student</h5>
+                                <h5>Course</h5>
                                 <div class="input-field">
-                                    <select class="select2 browser-default" id="student" name="student" required="1" onchange="return getCourse(this.value);">
-                                        @if(isset($getStudents))
-                                        @foreach($getStudents as $key=>$val)
-                                        <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <select class="select2 browser-default" id="course" name="course" required="1" onchange="return getStudents(this.value);">
+                                      <option value="">Select Course</option>
+
+                                        @if(isset($getCourse))
+                                        @foreach($getCourse as $key=>$val)
+                                        <option value="{{$key}}">{{strtoupper($val)}}</option>
                                         @endforeach
                                         @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col m6 s12">
-                                <h5>Course</h5>
+                                <h5>Student</h5>
                                 <div class="input-field">
-                                    <select class="select2 browser-default" id="course" required="1" onchange="return getHomeworkList(this.value);">
-                                        <option value="">Select Course</option>  
+                                    <select class="select2 browser-default" id="student" required="1" onchange="return getHomeworkList(this.value);">
+                                        <option value="">Select Student</option>
 
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="input-field col m12 s12" >
+                                    <label style="margin-left: 15px;">
+                                        <input type="checkbox" id="checkbox"  />
+                                        <span>Show All Student</span>
+                                    </label>
+                                </div>
+                              </div>
+                            </div>
                         <div id="sessionData">
                             @if(isset($getsessionData) && count($getsessionData) > 0)
                             <div class="row sessionNotesData">
-                                @foreach($getsessionData as $key=>$val)                              
+                                @foreach($getsessionData as $key=>$val)
                                 <div class="col s12 m12 20 indexSessionData">
                                     <div class="card ">
                                         <div class="card-title" style="text-align: center; padding: 10px">
@@ -122,11 +133,11 @@
                                         </div>
                                         @endif
                                     </div>
-                                </div>                                                           
+                                </div>
                                 @if($key % 2 != 0 )
                             </div>
                             <div class="row sessionNotesData">
-                                @endif                              
+                                @endif
                                 @endforeach
                             </div>
                             @else
@@ -151,7 +162,7 @@
                                         $(document).ready(function () {
                                         @if (isset($data))
                                                 var data = "<?php echo $data; ?>";
-                                        $('#course').html(data);
+                                        $('#student').html(data);
                                         @endif
 
                                                 @if (isset($timePeriod))
@@ -159,15 +170,26 @@
                                         $('#timePeriod').html(timePeriodDrop);
                                         @endif
                                         });
-                                        function getCourse(val) {
+                                        function getStudents(val) {
                                         $.ajax({
                                         type: "post",
-                                                url: '{{url("/")}}' + '/session-notes/tutor/getCourse',
-                                                data: {'stud_id': val,'userID':'<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                                url: '{{url("/")}}' + '/tutor/getStudents',
+                                                data: {'course_id': val,'userID':'<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
                                                 success: function (data) {
-                                                $('#course').html(data);
+                                                $('#student').html(data);
                                                 }
                                         });
+                                        $("#checkbox").click(function () {
+                                          $.ajax({
+                                              type: "post",
+                                              url: '{{url("/")}}' + '/tutor/getAllStudents',
+                                              data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                              success: function (data) {
+                                                  $('#student').html(data);
+                                              }
+                                          });
+                                        });
+
                                         var studentID = $("#student").val();
                                         var timePeriod = $("#timePeriod").val();
                                         var course = 'pageLoad';
@@ -201,6 +223,17 @@
                                                 }
                                         });
                                         }
+                                        $("#checkbox").click(function () {
+                                          $.ajax({
+                                              type: "post",
+                                              url: '{{url("/")}}' + '/tutor/getAllStudents',
+                                              data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                              success: function (data) {
+                                                  $('#student').html(data);
+                                              }
+                                          });
+                                        });
+
 </script>
 @endsection
 

@@ -39,7 +39,16 @@
                 <p style="text-align: justify;">
                     <strong>Notes-</strong> {{isset($vals->session_notes)?$vals->session_notes:''}}
                 </p>
-                <p style="text-align: center;"><a target="_blank" href="{{url('/tutor/getHomework',['session_id' => $vals->id,'student_id'=>$vals->student_id,'course_id'=>$vals->course_id])}}" class="waves-effect waves-light btn" style="background-color: #736cb5;    margin-top: 20px;">Click here for Homework</a></p>
+                  <?php
+                $hw= '';
+                if (isset($vals->homework)) {
+                    if ($vals->homework != '') {
+                        $hw = $vals->homework;
+                    }
+
+                }
+                ?>
+                <p style="text-align: center;"><a target="_blank" href="{{url($vals->homework)}}" class="waves-effect waves-light btn" style="background-color: #736cb5;    margin-top: 20px;">{{basename($hw)}}</a></p>
             </div>
             <!--            <div class=" card-alert card " style="background-color: #8862b5;">
                             <div class=" row">
@@ -79,7 +88,7 @@
 </div>
 @endif
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
     var countData = "{{ count($getsessionData)}}";

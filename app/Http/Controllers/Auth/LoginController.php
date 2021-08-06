@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
+use Session;
+use DB;
+use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller {
@@ -37,16 +40,36 @@ use AuthenticatesUsers;
      *
      * @return void
      */
+   
+     public function logout(Request $request){
+       $user =Auth::user();
+           $dt = Carbon::now();
+           Session::put('user',$user);
+           $user=Session::get('user');
+           //$login_time=toDayDateTimeString();
+           //dd($dt);
+           $activitylog =[
+             //'user_name'=>$name,
+             'logout_time'=>$dt,
+           ];
+           DB::table('activity_logs')->insert($activitylog);
+       Auth::logout();
+    return redirect('/login');
+     }
+
     public function __construct() {
+
+
         $this->middleware('guest')->except('logout');
     }
+
 
     protected function validateLogin(Request $request) {
         $userTypeVal = $request->userTypeVal;
         $userNameEmail = $request->email;
         $input = $request->all();
         // Get the user details from database and check if user is exist and active.
-        //Daniel        
+        //Daniel
 //         echo '<pre>';
 //        print_r($userTypeVal);
 //        die;
@@ -58,6 +81,23 @@ use AuthenticatesUsers;
             if (isset($user->roles) && $user->roles == '2') {
                 throw ValidationException::withMessages([$this->username() => __('User is not a Parent.')]);
             }
+            if (isset($user->status) && $user->status == 'Active' ) {
+
+              $name=$user->username;
+              $dt = Carbon::now();
+              Session::put('user',$user);
+              $user=Session::get('user');
+              //$login_time=toDayDateTimeString();
+              //dd($dt);
+              $activitylog =[
+                'user_name'=>$name,
+                'login_time'=>$dt,
+              ];
+              DB::table('activity_logs')->insert($activitylog);
+              //dd($activitylog);
+            }
+
+
 //        echo '<pre>';
 //        print_r($user->getStudents);
 //        die;

@@ -7,12 +7,15 @@ use Auth;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\StudentCourseTutor;
+use App\Models\Assessment;
+
 use App\Models\StudentSession;
 use App\Models\CustomDashboardData;
 use App\Models\StudentAnalytics;
 use App\Models\Invoices;
 use App\Models\StudentSessionPerformance;
 use Carbon\Carbon;
+use Session;
 use DB;
 
 class DashboardController extends Controller {
@@ -22,9 +25,24 @@ class DashboardController extends Controller {
 //        echo '<pre>';
 //        print_r($getCourseDetail);
 //        die;
+
+       $user =Auth::user();
+       $name=$user->username;
+           $dt = Carbon::now();
+           Session::put('user',$user);
+           $user=Session::get('user');
+           //$login_time=toDayDateTimeString();
+           //dd($dt);
+           $activitylog =[
+             'user_name'=>$name,
+             'login_time'=>$dt,
+           ];
+           DB::table('activity_logs')->insert($activitylog);
+
+
         $getStudents = $customDashboardData = $studentAnalytics = $studentSessionPerformance = $getsessionData = $getNoofsessionCompleted = array();
         $userID = Auth::user()->id;
-        $data = $searchDate = $courseID = $timePeriod = $searchEndDate = '';
+        $data = $hs = $skills = $assessments= $searchDate = $courseID = $timePeriod = $searchEndDate = '';
         $getUserData = User::find($userID);
         if (is_object($getUserData) && $getUserData->roles == '3' && $getUserData->status == 'Active') {
             $getStudents = Student::where(['parent_id' => $userID, 'status' => 'Active'])->pluck('name', 'id');
@@ -59,17 +77,26 @@ class DashboardController extends Controller {
                             }
                             $data .= "<option " . $selected . " value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
                         }
-
+                        $hs =StudentSession::where(['course_id' => $courseID, 'student_id' => $studKey]);
+                        //dd($hours);
+                        $hours =$hs->count();
+                        $assessments = Assessment::where(['course_id' => $courseID, 'student_id' => $studKey]);
+                        $assessment = $assessments->count();
+                        $skills = StudentSession::where(['course_id' => $courseID, 'student_id' => $studKey])->DISTINCT('topic_name');
+                        $skill = $skills->count();
                         $customDashboardData['typeOne'] = CustomDashboardData::where(['status' => 'Active', 'type' => 1])->get();
                         $customDashboardData['typeTwo'] = CustomDashboardData::where(['status' => 'Active', 'type' => 2])->get();
                         $customDashboardData['typeThree'] = CustomDashboardData::where(['status' => 'Active', 'type' => 3])->get();
                         $studentSessionPerformance = StudentSessionPerformance::where(['status' => 'Active', 'course_id' => $courseID, 'student_id' => $studKey])->get();
+
                         $studentAnalytics = StudentAnalytics::where(['course_id' => $courseID, 'student_id' => $studKey])->first();
                     }
 
                     $i++;
                 }
             }
+            return view('dashboard.index', ['pageConfigs' => $pageConfigs, 'hours'=>$hours,'assessment'=>$assessment,'skill'=>$skill, $getsessionData, 'studentAnalytics' => $studentAnalytics, 'getStudents' => $getStudents, 'studentSessionPerformance' => $studentSessionPerformance, 'customDashboardData' => $customDashboardData, 'data' => $data, 'timePeriod' => $timePeriod]);
+
         } else {
             $searchDate = date('Y-m-01 00:00:00');
             $searchEndDate = date('Y-m-t 23:59:59');
@@ -78,9 +105,11 @@ class DashboardController extends Controller {
                             ->where('session_date', '>=', $searchDate)->where('session_date', '<=', $searchEndDate)
                             ->groupBy('student_id')
 //                    ->orderBy('session_date','Desc')->get();
+
                             ->select('*','session_date as sessionDate', DB::raw('count(*) as totalSessions'))->get()->sortBy('getStudentDetail.name');
+                            return view('dashboard.index', ['pageConfigs' => $pageConfigs, 'getNoofsessionCompleted' => $getNoofsessionCompleted, 'getsessionData' => $getsessionData,  'getStudents' => $getStudents, 'studentSessionPerformance' => $studentSessionPerformance, 'customDashboardData' => $customDashboardData, 'data' => $data, 'timePeriod' => $timePeriod]);
+
         }
-        return view('dashboard.index', ['pageConfigs' => $pageConfigs, 'getNoofsessionCompleted' => $getNoofsessionCompleted, 'getsessionData' => $getsessionData, 'studentAnalytics' => $studentAnalytics, 'getStudents' => $getStudents, 'studentSessionPerformance' => $studentSessionPerformance, 'customDashboardData' => $customDashboardData, 'data' => $data, 'timePeriod' => $timePeriod]);
     }
 
     public function getNumberOfSession(Request $request) {
@@ -128,7 +157,7 @@ class DashboardController extends Controller {
         return $view;
     }
 
-   public function userProfile(Request $request) {
+    public function userProfile(Request $request) {
         $getCourseDetail = $studValArr = array();
         $getUserData = User::find(Auth::user()->id);
         if (isset($getUserData) && $getUserData->roles == '3') {
@@ -180,12 +209,19 @@ class DashboardController extends Controller {
         $courseID = $request->course;
         $studentID = $request->studentID;
         $customDashboardData = $studentSessionPerformance = array();
+        $hs =StudentSession::where(['course_id' => $courseID, 'student_id' => $studentID]);
+        //dd($hours);
+        $hours =$hs->count();
+        $assessments = Assessment::where(['course_id' => $courseID, 'student_id' => $studentID]);
+        $assessment = $assessments->count();
+        $skills = StudentSession::where(['course_id' => $courseID, 'student_id' => $studentID])->DISTINCT('topic_name');
+        $skill = $skills->count();
         $customDashboardData['typeOne'] = CustomDashboardData::where(['status' => 'Active', 'type' => 1])->get();
         $customDashboardData['typeTwo'] = CustomDashboardData::where(['status' => 'Active', 'type' => 2])->get();
         $customDashboardData['typeThree'] = CustomDashboardData::where(['status' => 'Active', 'type' => 3])->get();
         $studentSessionPerformance = StudentSessionPerformance::where(['status' => 'Active', 'course_id' => $courseID, 'student_id' => $studentID])->get();
         $studentAnalytics = StudentAnalytics::where(['course_id' => $courseID, 'student_id' => $studentID])->first();
-        $view = view('dashboard.dashboardDetailView', ['studentAnalytics' => $studentAnalytics, 'customDashboardData' => $customDashboardData, 'studentSessionPerformance' => $studentSessionPerformance])->render();
+        $view = view('dashboard.dashboardDetailView', ['hours'=>$hours,'assessment'=>$assessment,'skill'=>$skill,'studentAnalytics' => $studentAnalytics, 'customDashboardData' => $customDashboardData, 'studentSessionPerformance' => $studentSessionPerformance])->render();
         return $view;
     }
 
@@ -282,7 +318,7 @@ class DashboardController extends Controller {
         $customDashboardData['typeThree'] = CustomDashboardData::where(['status' => 'Active', 'type' => 3])->get();
         return view('dashboard.articles', ['customDashboardData' => $customDashboardData]);
     }
-    public function StudentAnalytics(Request $request){
+	 public function StudentAnalytics(Request $request){
 
       $pageConfigs = ['bodyCustomClass' => 'app-page'];
 
@@ -290,20 +326,12 @@ class DashboardController extends Controller {
           $Students = Student::All()->pluck('name', 'id');
           $studentID = $request->stud_id;
           $data = '';
-          $userID = Auth::user()->id;
-          $getUserData = User::find($userID);
-          if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
-           {
           $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
           $data .= "<option value=''>Select Course</option>";
           foreach ($getCourseDetail as $key => $val) {
               $data .= "<option value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
           }
-}
-else{
-  return view('/pages/page-404');
 
-}
 
 
 
@@ -316,10 +344,7 @@ else{
             'student_id' => $request->student,
             'course_id' => $request->course,
             'proficiency_level'=> $request->performance,
-            'no_of_hours_spent'=> $request->no_of_hours,
-            'newSkills'=> $request->new_skills,
             'participation_rate'=> $request->participation_rate,
-            'assessmentTaken'=> $request->assessment,
             'created_at'=>$now,
             'updated_at'=>$now,
 
@@ -330,4 +355,6 @@ else{
     return Redirect()->back()->with('success','Student Analytics Updated Successfully');
     }
 
-  }
+
+
+}

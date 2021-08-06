@@ -80,21 +80,21 @@ use App\Models\Course;
                      <tr >
                        <td>
 
-                                <select name ="addMoreInputFields[0][username]" class="select2 browser-default">
+                                <select name ="pid" class="select2 browser-default">
                                   <option value="">Select Parent</option>
                                   @foreach($user as $key=>$val)
                                   <option value="{{$key}}">{{$val}}</option>
                                   @endforeach
 
                      </select></td>
-                         <td><input type="text" name="addMoreInputFields[0][firstName]" placeholder="Enter First Name" class="form-control" />
+                         <td><input type="text" name="firstName" placeholder="Enter First Name" class="form-control" />
                          </td>
-                         <td><input type="text" name="addMoreInputFields[0][lastName]" placeholder="Enter Second Name" class="form-control" />
+                         <td><input type="text" name="lastName" placeholder="Enter Second Name" class="form-control" />
                          </td>
                       </tr>
                 <tr>
              <td>              <div class="input-field">
-               <select  class="select2 browser-default" name="addMoreInputFields[0][grade]" >
+               <select  class="select2 browser-default" name="grade" >
 
                                           <option value="">Select Grade</option>
 
@@ -176,9 +176,7 @@ use App\Models\Course;
         var i = 0;
         $("#dynamic-ar").click(function () {
           ++i;
-          $("#dynamicAddRemove").append('<tbody><tr><td><select name ="addMoreInputFields[' + i +'][username]" class="select2 browser-default"><option value="">{{"Select Parent"}}@foreach($user as $key=>$val)<option value="{{$key}}">{{$val}}</option>@endforeach</select></td><td><input type="text" name="addMoreInputFields[' + i +
-              '][firstName]" placeholder="Enter First Name" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
-                  '][lastName]" placeholder="Enter Last Name" class="form-control" /></td></tr><tr><td><select name ="addMoreInputFields[' + i +'][grade]" class="select2 browser-default"><option value="">{{"Select Grade"}}<option value="GR1">Grade1</option><option value="GR2">Grade2</option><option value="GR3">Grade3</option><option value="GR4">Grade4</option><option value="GR5">Grade5</option><option value="GR6">Grade6</option><option value="GR7">Grade7</option><option value="GR8">Grade8</option><option value="GR9">Grade9</option><option value="GR10">Grade10</option><option value="GR11">Grade11</option><option value="GR12">Grade12</option></select></td><td><select name ="addMoreInputFields[' + i +'][course_id]" class="select2 browser-default"><option value="">{{"Select Course"}}@foreach($course as $key=>$val)<option value="{{$key}}">{{$val}}</option>@endforeach</select></td><td><select name ="addMoreInputFields[' + i +'][tutor_id]" class="select2 browser-default"><option value="">{{"Select Tutor"}}@foreach($tutor as $key=>$val)<option value="{{$key}}">{{$val}}</option>@endforeach</select></td></tr><tr><td><b>Effictive Date</b><input type="date" class="form-control" name="addMoreInputFields['+ i +'][eff_date]"/></td><td><b>End Date</b><input type ="Date" class="form-control" name="addMoreInputFields['+ i +'][end_date]"/></td></td><td><button type="button" class="btn btn-outline-danger remove-input-field">-</button></td></tr></tbody>'
+          $("#dynamicAddRemove").append('<tbody><tr><td><select name ="addMoreInputFields[' + i +'][course_id]" class="select2 browser-default"><option value="">{{"Select Course"}}@foreach($course as $key=>$val)<option value="{{$key}}">{{$val}}</option>@endforeach</select></td><td><select name ="addMoreInputFields[' + i +'][tutor_id]" class="select2 browser-default"><option value="">{{"Select Tutor"}}@foreach($tutor as $key=>$val)<option value="{{$key}}">{{$val}}</option>@endforeach</select></td></tr><tr><td><b>Effictive Date</b><input type="date" class="form-control" name="addMoreInputFields['+ i +'][eff_date]"/></td><td><b>End Date</b><input type ="Date" class="form-control" name="addMoreInputFields['+ i +'][end_date]"/></td></td><td><button type="button" class="btn btn-outline-danger remove-input-field">-</button></td></tr></tbody>'
               );
       });
       $(document).on('click', '.remove-input-field', function () {

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentSession extends Model {
-
+public $timestamps = false;
     protected $table = 'student_session';
     protected $fillable = [
         'id',
@@ -25,7 +25,7 @@ class StudentSession extends Model {
         'attachment_id',
         'demo',
         'created_at',
-        'updated_at',
+
     ];
 
     public function getStudentDetail() {

@@ -13,28 +13,7 @@
             "navheader": "Manage",
             "icon": "more_horiz"
         },
-        {
-                "url": "javascript:void(0)",
-                "name": "Register User",
-                "i18n": "Register User",
-                "class": "collapsible-header waves-effect waves-cyan customClass",
-                "slug": "app-invoice",
-                "icon": "",
-                "submenu": [
-                    {
-                        "url": "register-user",
-                        "name": "Add User",
-                        "i18n": "Add User",
-                        "slug": "register-user"
-            },
-            {
-                        "url": "add-student",
-                        "name": "Add Student",
-                        "i18n": "Add Student",
-                        "slug": "add-student"
-                    }
-                ]
-            },
+
         {
             "url": "javascript:void(0)",
             "name": "Admin",
@@ -48,27 +27,56 @@
                     "name": "View Tutor Session Notes",
                     "i18n": "View Tutor Session Notes",
                     "slug": "view-tutor-sessions"
-        }
+        },
+
+        {
+            "url": "register-user",
+            "name": "Register User",
+            "i18n": "Add User",
+            "slug": "register-user"
+           },
+           {
+
+                 "url": "add-student",
+                       "name": "Add Student",
+                       "i18n": "Add Student",
+                       "slug": "add-student"
+                   },
+                   {
+
+                         "url": "add-tutor",
+                               "name": "Add Tutor",
+                               "i18n": "Add Tutor",
+                               "slug": "add-tutor"
+                           },
+                   {
+                       "url": "tutor-messages",
+                       "name": "Messages",
+                       "i18n": "Messages",
+                       "slug": "tutor-messages"
+                   }
+
             ]
         },
         {
-      "url": "assign-curriculum",
-      "name": "Assign Curriculum",
-      "i18n": "Assign Curriculum",
-      "class": "waves-effect waves-cyan",
-      "icon": "content_paste",
-      "slug": "assign-curriculum",
-      "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-      },
-    {
-        "url": "create-curriculum",
-        "name": "Create Curriculum",
-        "i18n": "CreateCurriculum",
-        "class": "waves-effect waves-cyan",
-        "icon": "chrome_reader_mode",
-        "slug": "crete-curriculum",
-        "tagcustom": "new badge pill pink accent-2 float-right mr-2"
-    },
+            "url": "create-curriculum",
+            "name": "Create Curriculum",
+            "i18n": "Create Curriculum",
+            "class": "waves-effect waves-cyan",
+            "icon": "chrome_reader_mode",
+            "slug": "create-curriculum",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "assign-curriculum",
+            "name": "Assign Course Curriculum",
+            "i18n": "Assign Course Curriculum",
+            "class": "waves-effect waves-cyan",
+            "icon": "content_paste",
+            "slug": "assign-curriculum",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+
         {
             "url": "post-session-notes",
             "name": "Post Session Notes",
@@ -89,18 +97,19 @@
         },
         {
             "url": "review-homework",
-            "name": "Review-Homework",
+            "name": "Review Student Homework",
             "i18n": "Review-Homework",
             "class": "waves-effect waves-cyan customClass",
             "icon": "hourglass_empty",
             "slug": "review-homework",
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
         },
+
         {
           "url": "javascript:void(0)",
           "name": "Assessments",
           "i18n": "Assessments",
-          "class": "collapsible-header waves-effect waves-cyan customClass",
+          "class": "collapsible-header waves-cyan ",
           "slug": "app-invoice",
           "icon": "assessment",
           "submenu": [
@@ -129,15 +138,14 @@
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
         },
         {
-            "url": "upload-system-files",
-            "name": "Upload System Files",
-            "i18n": "Upload System Files",
+            "url": "upload-homework-files",
+            "name": "Upload Homework Files",
+            "i18n": "Upload Homework Files",
             "class": "waves-effect waves-cyan",
             "icon": "attachment",
-            "slug": "upload-system-files",
+            "slug": "upload-homework-files",
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
         },
-
             {
                 "url": "student-analytics",
                 "name": "Student Analytics",
@@ -164,6 +172,15 @@
             "class": "waves-effect waves-cyan",
             "icon": "insert_drive_file",
             "slug": "grade-7-10",
+            "tagcustom": "new badge pill pink accent-2 float-right mr-2"
+        },
+        {
+            "url": "satEnglish",
+            "name": "SAT English",
+            "i18n": "SAT English",
+            "class": "waves-effect waves-cyan",
+            "icon": "insert_drive_file",
+            "slug": "satEnglish",
             "tagcustom": "new badge pill pink accent-2 float-right mr-2"
         }
     ]

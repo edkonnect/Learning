@@ -1,0 +1,78 @@
+
+<?php
+
+use App\Models\Course;
+?>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+
+  <div class="row">
+      <div class="col m6 s12">
+          <h5>Assigned Curriculum List</h5>
+          <div class="input-field">
+            <ul>
+
+              <?php $__empty_1 = true; $__currentLoopData = $res; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+              <li><?php echo e($key->topic_name); ?></li>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+    <div class="text-center jumbotron">
+        <h6 style="color:blue;">No Curriculum Assinged </h6>
+    </div>
+<?php endif; ?>
+
+            </ul>
+          </div>
+      </div>
+</div>
+
+  <div class="row">
+      <div class="col m12 s12">
+          <h5>Assign Curriculum</h5>
+          <div class="input-field">
+              <select class="select2 browser-default" id='myselect' multiple  name="lesson[]" required="1" >
+                <option value="">------ SELECT LESSON ------</option>
+
+                <?php $__currentLoopData = $lesson; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($key); ?>"><?php echo e(strtoupper($val)); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+              </select>
+          </div>
+      </div>
+</div>
+      <div class="row">
+          <div class="col m6 s12">
+              <h5>Start Date</h5>
+              <div class="input-field">
+                  <input type="date" id="start_date" name ="start_date"></input>
+
+              </div>
+          </div>
+
+              <div class="col m6 s12">
+                  <h5>End Date</h5>
+                  <div class="input-field">
+                      <input type="date"id="end_date" name ="end_date"></input>
+
+                  </div>
+              </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+  <script>
+  $('#myselect').select2({
+    width: '100%',
+
+    //placeholder: "Choose Lesson",
+      theme: "classic",
+    allowClear: true
+
+  });
+
+</script>
+
+
+<script src="<?php echo e(asset('js/plugins.js')); ?>"></script>
+<?php /**PATH /home/n614h8do5jis/public_html/V/app/edkonnect/resources/views/curriculum/getCurriculum.blade.php ENDPATH**/ ?>

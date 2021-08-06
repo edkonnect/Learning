@@ -120,8 +120,7 @@
         </div>
     </div>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><script>
 $(document).on("click", ".dropify-clear", function (event) {
     var profile_remove = $('#input-file-now').attr('data-id');
     var resume_remove = $('#resume').attr('data-id');
