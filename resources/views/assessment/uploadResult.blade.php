@@ -163,8 +163,8 @@ use App\Models\Course;
     </section>
 </div>
 
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-            <script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
             $(document).ready(function () {
             @if (isset($data))
                     var data = "<?php echo $data; ?>";

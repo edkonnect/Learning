@@ -7,8 +7,10 @@ use App\Models\Messages;
 use App\Models\MessagesReason;
 use App\Models\MessagesReply;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Auth;
 use DateTime;
+use DB;
 
 class MessagesController extends Controller {
 
@@ -84,5 +86,73 @@ class MessagesController extends Controller {
             return redirect('messages')->with('error', 'No Data Found');
         }
     }
+    public function TutorIndex(){
+      $getData = $getReasons = array();
+      $userID = Auth::user()->id;
+      $data = '';
+      $getUserData = User::find($userID);
+      if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active') {
 
+          $getData = DB::table('message')
+                ->leftjoin('users AS B', 'B.id', '=','message.user_id')
+                ->leftjoin('message_reason AS C', 'C.id', '=','message.reason_id')
+                ->select('message.*','B.username','C.reason')
+                ->get();
+
+      } else {
+          return redirect('tutor-messages')->with('error', 'Your not allowed to perform this action');
+      }
+      return view('messages.TutorIndex', ['getData' => $getData, 'getReasons' => $getReasons, 'pkID' => ""]);
+  }
+  public function showMsg($id) {
+      $getData = Messages::find($id);
+      if (isset($getData)) {
+        if (isset($getData->getReply->message_text)) {
+              $updateData['status'] = 'Closed';
+              $updateData['view_status'] = '1';
+              $getData->update($updateData);
+          }
+          return view('messages.showMsg', ['getData' => $getData]);
+      } else {
+          return redirect('tutor-messages')->with('error', 'No Data Found');
+      }
+  }
+  public function action($id) {
+      $mid = $id;
+
+  return view('messages.tutor-form',compact('mid'));
+  }
+
+  public function status(Request $request) {
+    $admin_id =Auth::User()->id;
+$mid=$request->mid;
+$datetime =Carbon::now();
+$message_text=$request->Reply;
+//$status = "Closed";
+      $messages = Messages::find($request->mid);
+      $view_status =$request->view_status;
+      if($view_status == 1){
+        $status= "Closed";
+      }
+      else{
+        $status = "Open";
+      }
+        $messages->view_status = $view_status;
+        $messages->status = $status;
+      $messages->save();
+
+$message_reply = new MessagesReply();
+      $message_reply->date_time = $datetime;
+      $message_reply->message_id = $mid;
+      $message_reply->message_text = $message_text;
+      $message_reply->admin_id = $admin_id;
+      $message_reply->status= $status;
+
+      $message_reply->created_at =$datetime;
+      $message_reply->updated_at =$datetime;
+      $message_reply->save();
+
+
+        return redirect('tutor-messages')->with('success','Status changed successfully.');
+  }
 }

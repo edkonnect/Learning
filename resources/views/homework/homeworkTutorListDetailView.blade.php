@@ -5,7 +5,7 @@
 ?>
 @if(isset($getsessionData) && !empty($getsessionData) && count($getsessionData)>0)
 <div class="row sessionNotesData">
-    @foreach($getsessionData as $keys=>$vals)                               
+    @foreach($getsessionData as $keys=>$vals)
     <div class="col s12 m12 20 indexSessionData">
         <div class="card ">
             <div class="card-title " style="text-align: center; padding: 10px">
@@ -36,7 +36,7 @@
                     <div class=" col s12 m3">
                         <div class=" card-action" style="text-align: center">
                             Homework - {{$keyAttach+1}}
-                            <a href="{{url("/")}}/uploads/{{$vals->getStudentDetail->username.'/'.$vals->getTutorDetail->username.'/'.$valAttch->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">Download</a>
+                            <a href="{{url("/")}}/uploads/{{$vals->getStudentDetail->username.'/'.$valAttch->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">Download</a>
                         </div>
                     </div>
                     @endforeach
@@ -52,7 +52,7 @@
             </div>
             @endif
         </div>
-    </div>                              
+    </div>
     @endforeach
 </div>
 @else

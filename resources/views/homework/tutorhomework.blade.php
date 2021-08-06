@@ -37,9 +37,9 @@
                                 <?php $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All"); ?>
                                 <select class="select2 browser-default" id="timePeriod" name="timePeriod" onchange="return getHomeworkList(this.value);">
                                     @if(isset($getStudents))
-                                    <option value="">Select Time Period</option>  
+                                    <option value="">Select Time Period</option>
                                     @foreach($getTimePeriod as $key=>$val)
-                                    <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <option value="{{$key}}">{{strtoupper($val)}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -55,7 +55,7 @@
                                     <select class="select2 browser-default" id="student" name="student" required="1" onchange="return getCourse(this.value);">
                                         @if(isset($getStudents))
                                         @foreach($getStudents as $key=>$val)
-                                        <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                        <option value="{{$key}}">{{strtoupper($val)}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -65,7 +65,7 @@
                                 <h5>Course</h5>
                                 <div class="input-field">
                                     <select class="select2 browser-default" id="course" required="1" onchange="return getHomeworkList(this.value);">
-                                        <option value="">Select Course</option>  
+                                        <option value="">Select Course</option>
 
                                     </select>
                                 </div>
@@ -74,7 +74,7 @@
                         <div id="sessionData">
                             @if(isset($getsessionData) && count($getsessionData) > 0)
                             <div class="row sessionNotesData">
-                                @foreach($getsessionData as $key=>$val)                              
+                                @foreach($getsessionData as $key=>$val)
                                 <div class="col s12 m12 20 indexSessionData">
                                     <div class="card ">
                                         <div class="card-title" style="text-align: center; padding: 10px">
@@ -106,7 +106,7 @@
                                                 @foreach($val->getStudHWAttachmentDetail as $keyAttach=>$valAttch)
                                                 <div class=" col s12 m3">
                                                     <div class=" card-action" style="text-align: center">
-                                                        Homework - {{$keyAttach+1}}<a href="{{url("/")}}/uploads/{{$val->getStudentDetail->username.'/'.$val->getTutorDetail->username.'/'.$valAttch->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">Download</a>
+                                                        Homework - {{$keyAttach+1}}<a href="{{url("/")}}/uploads/{{$val->getStudentDetail->username.'/'.$valAttch->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">Download</a>
                                                     </div>
                                                 </div>
                                                 @endforeach
@@ -122,11 +122,11 @@
                                         </div>
                                         @endif
                                     </div>
-                                </div>                                                           
+                                </div>
                                 @if($key % 2 != 0 )
                             </div>
                             <div class="row sessionNotesData">
-                                @endif                              
+                                @endif
                                 @endforeach
                             </div>
                             @else
@@ -146,7 +146,7 @@
             </div>
     </section>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
                                         $(document).ready(function () {
                                         @if (isset($data))

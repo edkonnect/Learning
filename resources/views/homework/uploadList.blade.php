@@ -3,7 +3,7 @@
 <hr>
 <h5>Uploaded Documents</h5>
 <div class="row">
-    <div class="col s12">     
+    <div class="col s12">
         <input type="hidden" value="{{count($getListing)}}" id="totalCount" />
         <table id="page-length-option" class="display">
             <thead>
@@ -15,7 +15,7 @@
                     <th style="text-align: center">Action</th>
                 </tr>
             </thead>
-            <tbody>                    
+            <tbody>
                 @foreach($getListing as $key=>$val)
                 <?php
                 $studUserName = $val->getStudentDetail($val->getSessionDetail->student_id);
@@ -24,9 +24,9 @@
                 <tr>
                     <td style="text-align: center">{{$key+1}}</td>
                     <td style="text-align: center">{{isset($val->getSessionDetail->session_date) ? date('l jS \of F Y h:i:s A',strtotime($val->getSessionDetail->session_date)) : ''}}</td>
-                    <td style="text-align: center">{{isset($val->created_at) ? date('l jS \of F Y h:i:s A',strtotime($val->created_at)) : ''}}</td>                        
+                    <td style="text-align: center">{{isset($val->created_at) ? date('l jS \of F Y h:i:s A',strtotime($val->created_at)) : ''}}</td>
                     <td style="text-align: center">
-                        <a href="{{url("/")}}/uploads/{{$parentUserName->username . '/' . $studUserName->username.'/'.$val->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">View</a>
+                        <a href="{{url("/")}}/uploads/{{$parentUserName->username . '/' .$val->attachment_link}}" target="_blank" class="waves-effect waves-light btn" style="background-color: #736cb5;">View</a>
                     </td>
                     <td style="text-align: center">
                         <a href="javascript:void(0);" data-id="{{$val->id}}" onclick="return deleteListing({{$val->id}});" id="deleteAttachment" class="waves-effect waves-light btn" style="background-color: #736cb5;">Delete</a>

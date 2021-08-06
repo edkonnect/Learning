@@ -14,6 +14,7 @@ use App\Models\TutorCourse;
 use App\Models\StudentLessonTutorAssignment;
 use App\Models\TutorHWAttachment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Auth;
 use DB;
 
@@ -122,7 +123,7 @@ class SessionController extends Controller {
                         $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studKey)->get();
                         $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All");
                         $timePeriod = '';
-                        $timePeriod .= "<option value=''>Select Course</option>";
+                        $timePeriod .= "<option value=''>Select Timeperiod</option>";
                         foreach ($getTimePeriod as $getTimePeriodKey => $getTimePeriodVal) {
                             if ($getTimePeriodKey == 2) {
                                 $selected = "selected";
@@ -161,68 +162,86 @@ class SessionController extends Controller {
         return view('session.index', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents, 'getsessionData' => $getsessionData, 'data' => $data, 'timePeriod' => $timePeriod]);
     }
 
-    public function tutorView() {
-        // custom body class
-        $pageConfigs = ['bodyCustomClass' => 'app-page'];
-        $getStudents = $getsessionData = array();
-        $userID = Auth::user()->id;
-        $data = $searchDate = $timePeriod = $courseID = $searchEndDate = '';
-        $getUserData = User::find($userID);
-        if (is_object($getUserData) && $getUserData->status == 'Active') {
-            $getTutorsStudents = StudentCourseTutor::where(['tutor_id' => $userID])->pluck('student_id');
-            $getStudents = Student::where(['status' => 'Active'])->whereIn('id', $getTutorsStudents)->orderBy('name', 'ASC')->pluck('name', 'id');
-            if (isset($getStudents)) {
-                $i = 0;
-                foreach ($getStudents as $studKey => $getStudentsVal) {
-                    if ($i == 0) {
+      public function tutorView() {
+      $pageConfigs = ['bodyCustomClass' => 'app-page'];
+//        echo '<pre>';
+//        print_r($getCourseDetail);
+//        die;
+      $getCourse = $getsessionData = array();
+      $userID = Auth::user()->id;
+      $data = $searchDate = $courseID = $searchEndDate = '';
+      $getUserData = User::find($userID);
+      if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active') {
+          $getTutorCourse = StudentCourseTutor::where(['tutor_id' => $userID])->pluck('course_id');
+          $getCourse = Course::where(['status' => 'Active'])->whereIn('id', $getTutorCourse)->orderBy('course_name', 'ASC')->pluck('course_name', 'id');
+          if (isset($getCourse)) {
+              $i = 0;
+              foreach ($getCourse as $courseKey => $getCourseVal) {
+                  if ($i == 0) {
 
-                        $getCourseDetail = StudentCourseTutor::where(['student_id' => $studKey, 'tutor_id' => $userID])->get();
-                        $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All");
-                        $timePeriod = '';
-                        $timePeriod .= "<option value=''>Select Timeperiod</option>";
-                        foreach ($getTimePeriod as $getTimePeriodKey => $getTimePeriodVal) {
-                            if ($getTimePeriodKey == 2) {
-                                $selected = "selected";
-                            } else {
-                                $selected = '';
-                            }
-                            $timePeriod .= "<option " . $selected . " value=" . $getTimePeriodKey . ">" . $getTimePeriodVal . "</option>";
-                        }
+                      $getStudents = StudentCourseTutor::with('getStudentDetail')->where(['course_id' => $courseKey, 'tutor_id' => $userID])->get();
 
-
-
-                        $data = '';
-                        $data .= "<option value=''>Select Course</option>";
-                        foreach ($getCourseDetail as $key => $val) {
-                            if ($key == 0) {
-                                $courseID = $val->course_id;
-                                $selected = "selected";
-                            } else {
-                                $selected = '';
-                            }
-                            $data .= "<option " . $selected . " value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
-                        }
+                      $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All");
+                      $timePeriod = '';
+                      $timePeriod .= "<option value=''>Select Time</option>";
+                      foreach ($getTimePeriod as $getTimePeriodKey => $getTimePeriodVal) {
+                          if ($getTimePeriodKey == 2) {
+                              $selected = "selected";
+                          } else {
+                              $selected = '';
+                          }
+                          $timePeriod .= "<option " . $selected . " value=" . $getTimePeriodKey . ">" . $getTimePeriodVal . "</option>";
+                      }
 
 
-                        $searchDate = date('Y-m-01 00:00:00');
-                        $searchEndDate = date('Y-m-t 23:59:59');
-                        $getsessionData = StudentSession::where(['student_id' => $studKey, 'tutor_id' => $userID, 'course_id' => $courseID, 'status' => 'Active'])
-                                ->where('session_date', '>=', $searchDate)->where('session_date', '<=', $searchEndDate)
-                                ->orderBy('session_date', 'Desc')
-                                ->get();
-                    }
-                    $i++;
-                }
-            }
-        }
-        return view('session.tutorview', ['pageConfigs' => $pageConfigs, 'getStudents' => $getStudents, 'getsessionData' => $getsessionData, 'data' => $data, 'timePeriod' => $timePeriod]);
+                      $data = '';
+                      $data .= "<option value=''>Select Student</option>";
+                      foreach ($getStudents as $key => $val) {
+                          if ($key == 0) {
+                              $studentID = $val->id;
+                              $selected = "selected";
+                          } else {
+                              $selected = '';
+                          }
+                        //  $data .= "<option " . $selected . " value=" . $val->getCourseDetail->id . ">" . $val->getCourseDetail->course_name . "</option>";
+                      }
+
+                      $searchDate = date('Y-m-01 00:00:00');
+                      $searchEndDate = date('Y-m-t 23:59:59');
+                      $getsessionData = StudentSession::where(['student_id' => $studentID, 'tutor_id' => $userID, 'course_id' => $courseKey, 'status' => 'Active'])
+                               ->where('session_date', '>=', $searchDate)->where('session_date', '<=', $searchEndDate)
+                               ->orderBy('session_date', 'Desc')
+                               ->get();
+                  }
+
+                  $i++;
+              }
+          }
+      }
+        return view('session.tutorview', ['pageConfigs' => $pageConfigs, 'getCourse' => $getCourse, 'getsessionData' => $getsessionData, 'data' => $data, 'timePeriod' => $timePeriod]);
     }
+
+
 
     public function getStudents(Request $request) {
         $courseID = $request->course_id;
         $userID = $request->userID;
         $data = '';
         $getCourseDetail = StudentCourseTutor::where(['course_id' => $courseID, 'tutor_id' => $userID])->get();
+        if (isset($getCourseDetail) && count($getCourseDetail) > 0) {
+            foreach ($getCourseDetail as $key => $val) {
+                if (isset($val->getStudentDetail)) {
+                    $data .= "<option value=" . $val->student_id . ">" . strtoupper($val->getStudentDetail->name) . "</option>";
+                }
+            }
+        }
+        return $data;
+    }
+    public function getAllStudents(Request $request) {
+        $courseID = $request->course_id;
+        $userID = $request->userID;
+        $data = '';
+        $getCourseDetail = StudentCourseTutor::where(['course_id' => $courseID])->get();
         if (isset($getCourseDetail) && count($getCourseDetail) > 0) {
             foreach ($getCourseDetail as $key => $val) {
                 if (isset($val->getStudentDetail)) {
@@ -254,20 +273,32 @@ class SessionController extends Controller {
         $studentID = $request->student_id;
 
         $data = '';
-        // $getLessonDetail =  DB::table('lesson_plan')
-        //       ->leftjoin('student_lesson_tutor_assignment AS B', 'B.lesson_id', '=','lesson_plan.id')
-        //       ->select('lesson_plan.id','lesson_plan.topic_name')
-        //       ->where('B.student_id',$studentID)
-        //       ->where('B.course_id',$courseID)
-        //       ->get();
-        $getLessonDetail = LessonPlan::where(['course_id' => $courseID, 'status' => 'Active'])->groupBy('topic_name')->get();
+        $getLessonDetail =  DB::table('lesson_plan')
+              ->leftjoin('student_lesson_tutor_assignment AS B', 'B.lesson_id', '=','lesson_plan.id')
+              ->select('lesson_plan.id','lesson_plan.topic_name')
+              ->where('B.student_id',$studentID)
+              ->where('B.course_id',$courseID)
+              ->get();
+      //  $getLessonDetail = LessonPlan::where(['course_id' => $courseID, 'status' => 'Active'])->groupBy('topic_name')->get();
         $data .= "<option value=''>Select Topic</option>";
         foreach ($getLessonDetail as $key => $val) {
             $data .= "<option value=" . $val->id . ">" . strtoupper($val->topic_name) . "</option>";
         }
         return $data;
     }
+    public function getLessonPlans(Request $request) {
+        $courseID = $request->course_id;
+        $studentID = $request->student_id;
 
+        $data = '';
+
+       $getLessonDetail = LessonPlan::where(['course_id' => $courseID, 'status' => 'Active'])->groupBy('topic_name')->get();
+        $data .= "<option value=''>Select Topic</option>";
+        foreach ($getLessonDetail as $key => $val) {
+            $data .= "<option value=" . $val->id . ">" . strtoupper($val->topic_name) . "</option>";
+        }
+        return $data;
+    }
     public function setCloneData(Request $request) {
         $studID = $request->studID;
         $courseID = $request->course_id;
@@ -309,7 +340,7 @@ class SessionController extends Controller {
         $studentID = $request->stud_id;
         $userID = $request->userID;
         $data = '';
-        $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where(['student_id' => $studentID, 'tutor_id' => $userID])->get();
+        $getCourseDetail = StudentCourseTutor::with('getCourseDetail')->where(['student_id' => $studentID])->get();
         $data .= "<option value=''>Select Course</option>";
 
         foreach ($getCourseDetail as $key => $val) {
@@ -333,6 +364,9 @@ class SessionController extends Controller {
 //                  echo '<pre>';
 //        print_r($request->all());
 //        die;
+
+
+              $created=Carbon::now();
                 $time = isset($request->timepicker) ? date("H:i:s", strtotime($request->timepicker)) : '';
                 $addSessionData = new StudentSession();
                 $findLessonTopic = LessonPlan::find($request->topic);
@@ -342,18 +376,18 @@ class SessionController extends Controller {
                 $addData['topic_name'] = isset($findLessonTopic->topic_name) ? $findLessonTopic->topic_name : '';
                 $addData['tutor_id'] = Auth::user()->id;
                 $addData['lesson_detail_id'] = $request->subTopic;
+                $addData['created_at']=$created;
 //                $addData['session_date'] = date('Y-m-d', strtotime($request->session_date));
                 $addData['session_date'] = isset($time) ? date('Y-m-d', strtotime(str_replace("/", "-", $request->session_date))) . ' ' . $time : date('Y-m-d', strtotime(str_replace("/", "-", $request->session_date)));
                 $addData['session_notes'] = $request->session_notes;
                 $addData['status'] = 'Active';
                 $addData['demo'] = isset($request->demo) && $request->demo == 'on' ? 'Yes' : 'No';
                 $addData['student_id'] = $value;
-                $addSessionData->create($addData);
-                $lastInsertedID = DB::getPdo()->lastInsertId();
-                $updateSessionData = StudentSession::find($lastInsertedID)->update(['attachment_id' => $lastInsertedID]);
-                if (isset($request->browseFileType) && $request->browseFileType != '') {
+				 $file=  $request->browseFileType ;
+                if (isset($file) && $file != '') {
+
                     $fileName = '';
-                    if ($request->browseFileType == 1) {
+                    if ($file==1) {
                         $fileName = "internal/uploads/" . Auth::user()->username . "/" . $request->fileSelected;
                     } else {
                         $grade = $request->selectedGrade;
@@ -361,6 +395,38 @@ class SessionController extends Controller {
                         $gradeName = isset($getGrade->name) ? $getGrade->name : '';
                         $fileName = "internal/uploads/system/" . $gradeName . "/" . $request->fileSelected;
                     }
+					}
+					$addData['homework'] = $fileName;
+                $addSessionData->create($addData);
+                $lastInsertedID = DB::getPdo()->lastInsertId();
+                // echo "<pre>";
+                // print_r($lastInsertedID);
+                // exit();
+
+                $updateSessionData = StudentSession::find($lastInsertedID)->update(['attachment_id' => $lastInsertedID]);
+              $file=  $request->browseFileType ;
+                if (isset($file) && $file != '') {
+
+                    $fileName = '';
+                    if ($file==1) {
+                        $fileName = "internal/uploads/" . Auth::user()->username . "/" . $request->fileSelected;
+                    } else {
+                        $grade = $request->selectedGrade;
+                        $getGrade = Grades::find($grade);
+                        $gradeName = isset($getGrade->name) ? $getGrade->name : '';
+                        $fileName = "internal/uploads/system/" . $gradeName . "/" . $request->fileSelected;
+                    }
+              //   $fileName = '';
+              //  if (isset($request->browseFileType) && $request->browseFileType != '') {
+              //
+              //
+              //   $fileName = "internal/uploads/system". $grade . "/" . $request->fileSelected;
+              // // $fileName = "internal/uploads/system". Auth::user()->username . "/" . $request->fileSelected;
+ //}
+
+                    // echo "<pre>";
+                    // print_r($fileName);
+                    // exit();
 //print_r($fileName); die;
                     $addAttachment = new TutorHWAttachment();
                     $addAttachment->attachment_id = $lastInsertedID;
@@ -369,8 +435,8 @@ class SessionController extends Controller {
                     $addAttachment->attachment_link = $fileName;
                     $addAttachment->save();
                 }
-            }
 
+}
             return redirect('post-session-notes')->with('success', 'Session added successfully');
         }
     }
@@ -479,6 +545,62 @@ class SessionController extends Controller {
         $view = view('session.sessionTutorDetailView', ['getsessionData' => $getsessionData, 'input' => $input])->render();
         return $view;
     }
+    public function getAllTutorSession(Request $request) {
+        $courseID = $request->course_id;
+        $studentID = $request->studentID;
+        $input = $request->timePeriod;
+        $userID = $request->userID;
+        $getsessionData = array();
+        $query = StudentSession::where([ 'status' => 'Active']);
+        if ($courseID != '') {
+            $query->where('course_id', $courseID);
+        }
+        else {
+            $getCourseDetail = StudentCourseTutor::where(['student_id' => $studentID])->get();
+            foreach ($getCourseDetail as $key => $val) {
+                if ($key == 0) {
+                    $courseID = $val->course_id;
+                }
+            }
+            $query->where('course_id', $courseID);
+        }
+
+        $searchDate = $searchEndDate = '';
+        if ($input != '') {
+            if ($input == '1') {
+                $searchDate = date('Y-m-d 00:00:00');
+                $searchEndDate = date('Y-m-d 23:59:59');
+            } elseif ($input == '2') {
+                $searchDate = date('Y-m-01 00:00:00');
+                $searchEndDate = date('Y-m-t 23:59:59');
+            } elseif ($input == '3') {
+                $ts = strtotime(date('Y-m-d 00:00:00'));
+                $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+                $searchDate = date('Y-m-d 00:00:00', $start);
+                $searchEndDate = date('Y-m-d 23:59:59', strtotime('next saturday', $start));
+            } elseif ($input == '4') {
+                $ts = strtotime(date("Y-m-d 00:00:00", strtotime("-7 days")));
+                $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+                $searchDate = date('Y-m-d 00:00:00', $start);
+                $searchEndDate = date('Y-m-d 23:59:59', strtotime('next saturday', $start));
+            } elseif ($input == '5') {
+                $searchDate = date('Y-m-d 00:00:00', strtotime('first day of last month'));
+                $searchEndDate = date('Y-m-d 23:59:59', strtotime('last day of last month'));
+            }
+            if ($input == 6) {
+                $getsessionData = $query->orderBy('session_date', 'Desc')->get();
+            } else {
+                $getsessionData = $query->where('session_date', '>=', $searchDate)->where('session_date', '<=', $searchEndDate)
+                        ->orderBy('session_date', 'Desc')
+                        ->get();
+            }
+        } else {
+            $getsessionData = $query->orderBy('session_date', 'Desc')->get();
+        }
+        $view = view('session.sessionTutorDetailView', ['getsessionData' => $getsessionData, 'input' => $input])->render();
+        return $view;
+    }
+
 
     public function getTimePeriodData(Request $request) {
         $input = $request->timePeriod;

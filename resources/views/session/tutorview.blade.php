@@ -36,10 +36,10 @@
                             <div class="col m3 float-right">
                                 <?php $getTimePeriod = array("2" => "This Month", "3" => "This Week", "4" => "Last Week", "5" => "Last Month", "6" => "View All"); ?>
                                 <select class="select2 browser-default" id="timePeriod" name="timePeriod" onchange="return getSession(this.value);">
-                                    @if(isset($getStudents))
-                                    <option value="">Select Time Period</option>  
+                                    @if(isset($getCourse))
+                                    <option value="">Select Time </option>
                                     @foreach($getTimePeriod as $key=>$val)
-                                    <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <option value="{{$key}}">{{strtoupper($val)}}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -50,27 +50,38 @@
 
                         <div class="row">
                             <div class="col m6 s12">
-                                <h5>Student</h5>
+                                <h5>Course</h5>
                                 <div class="input-field">
-                                    <select class="select2 browser-default" id="student" name="student" required="1" onchange="return getCourse(this.value);">
-                                        @if(isset($getStudents))
-                                        @foreach($getStudents as $key=>$val)
-                                        <option value="{{$key}}">{{strtoupper($val)}}</option>                                        
+                                    <select class="select2 browser-default" id="course" name="course" required="1" onchange="return getStudents(this.value);">
+                                      <option value="">Select Course</option>
+
+                                        @if(isset($getCourse))
+                                        @foreach($getCourse as $key=>$val)
+                                        <option value="{{$key}}">{{strtoupper($val)}}</option>
                                         @endforeach
                                         @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col m6 s12">
-                                <h5>Course</h5>
+                                <h5>Student</h5>
                                 <div class="input-field">
-                                    <select class="select2 browser-default" id="course" required="1" onchange="return getSession(this.value);">
-                                        <option value="">Select Course</option>  
+                                    <select class="select2 browser-default" name="student" id="student" required="1" onchange="return getSession(this.value);">
 
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="input-field col m12 s12" >
+                                    <label style="margin-left: 15px;">
+                                        <input type="checkbox" id="checkbox"  />
+                                        <span>Show All Student</span>
+                                    </label>
+                                </div>
+                              </div>
+                            </div>
                         <div id="sessionData">
                             @if(isset($getsessionData) && !empty($getsessionData))
                             <div class="row sessionNotesData" style="display: none;">
@@ -89,6 +100,7 @@
                                                         {{isset($val->demo) && $val->demo == 'Yes'?'Demo':''}}
                                                     </div>
                                                 </div>
+
                                                 <div class="col s12 m4 20">
                                                     <div class="card-action " style="text-align: right; color: white;">
                                                         <a style="color: white;" href="{{url("/")}}/Tutorprofile/Edkonnect/E/{{$val->getTutorDetail->name}}.pdf" target="_blank">{{isset($val->getTutorDetail->name)?ucfirst('Tutor : '.$val->getTutorDetail->name):''}}</a>
@@ -108,8 +120,17 @@
                                             <p style="text-align: justify;">
                                                 <strong>Notes-</strong> {{isset($val->session_notes)?$val->session_notes:''}}
                                             </p>
-                                            <p style="text-align: center;"><a target="_blank" href="{{url('/tutor/getHomework',['session_id' => $val->id,'student_id'=>$val->student_id,'course_id'=>$val->course_id])}}" class="waves-effect waves-light btn" style="background-color: #736cb5;    margin-top: 20px;">Click here for Homework</a></p>
-                                        </div>
+                                             <?php
+                $hw= '';
+                if (isset($vals->homework)) {
+                    if ($vals->homework != '') {
+                        $hw = $vals->homework;
+                    }
+
+                }
+                ?>
+                <p style="text-align: center;"><a target="_blank" href="{{url($vals->homework)}}" class="waves-effect waves-light btn" style="background-color: #736cb5;    margin-top: 20px;">{{basename($hw)}}</a></p>
+            </div>
 
 
                                         <!--                                        <div class="card-alert card " style="background-color: #8862b5;">
@@ -158,12 +179,12 @@
         </div>
     </section>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
                                         $(document).ready(function () {
                                         @if (isset($data))
                                                 var data = "<?php echo $data; ?>";
-                                        $('#course').html(data);
+                                        $('#student').html(data);
                                         @endif
                                         @if (isset($timePeriod))
                                                 var timePeriodDrop = "<?php echo $timePeriod; ?>";
@@ -193,25 +214,28 @@
                                         }
                                         });
                                         });
-                                        function getCourse(val) {
-                                        $.ajax({
-                                        type: "post",
-                                                url: '{{url("/")}}' + '/session-notes/tutor/getCourse',
-                                                data: {'stud_id': val,'userID':'<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                        function getStudents(val) {
+
+                                            $.ajax({
+                                                type: "post",
+                                                url: '{{url("/")}}' + '/tutor/getStudents',
+                                                data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
                                                 success: function (data) {
-                                                $('#course').html(data);
+                                                    $('#student').html(data);
                                                 }
-                                        });
-                                        var studentID = $("#student").val();
-                                        var timePeriod = $("#timePeriod").val();
-                                        $.ajax({
-                                        type: "post",
-                                                url: '{{url("/")}}' + '/session-notes/tutor/getSession',
-                                                data: {'course_id': '','userID':'<?php echo Auth::user()->id; ?>', 'timePeriod': timePeriod, 'studentID': studentID, '_token': '{{ csrf_token() }}'},
-                                                success: function (data) {
-                                                $('#sessionData').html(data);
-                                                }
-                                        });
+                                            });
+
+                                            $("#checkbox").click(function () {
+                                              $.ajax({
+                                                  type: "post",
+                                                  url: '{{url("/")}}' + '/tutor/getAllStudents',
+                                                  data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                                  success: function (data) {
+                                                      $('#student').html(data);
+                                                  }
+                                              });
+                                            });
+
                                         }
                                         function getSession() {
                                         var studentID = $("#student").val();
@@ -226,6 +250,9 @@
                                                 $('#sessionData').html(data);
                                                 }
                                         });
+                                      
+
+
                                         }
                                         function getTimePeriodData(val) {
                                         var studentID = $("#student").val();
@@ -239,7 +266,22 @@
                                                 $('#sessionNotesData').html(data);
                                                 }
                                         });
+
+                                        $("#checkbox").click(function () {
+                                          $.ajax({
+                                              type: "post",
+                                              url: '{{url("/")}}' + '/tutor/getAllStudents',
+                                              data: {'course_id': val, 'userID': '<?php echo Auth::user()->id; ?>', '_token': '{{ csrf_token() }}'},
+                                              success: function (data) {
+                                                  $('#student').html(data);
+                                              }
+                                          });
+                                        });
+
                                         }
+
+
+
 </script>
 @endsection
 

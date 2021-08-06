@@ -80,7 +80,7 @@ use App\Models\Course;
                             <div class="col m6 s12">
                                 <h5>Student</h5>
                                 <div class="input-field">
-                                  <select class="select2 browser-default" id="student" name="student" required="1" onchange="return getCourse(this.value);">
+                                    <select class="select2 browser-default" id="student" name="student" required="1" >
                                                         <option value="">Select Student</option>
 
                                         @foreach($Students as $key=>$val)
@@ -97,6 +97,9 @@ use App\Models\Course;
                                         <select class="select2 browser-default" id="course" name="course" required="1" onchange="return getCurriculum(this.value);">
                   <option value="">Select Course</option>
 
+                                            @foreach($Courses as $key=>$val)
+                                            <option value="{{$key}}">{{strtoupper($val)}}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -152,24 +155,8 @@ use App\Models\Course;
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>          
             <script>
-            function getCourse(val) {
-              $(document).ready(function () {
-              @if (isset($data))
-                      var data = "<?php echo $data; ?>";
-              $('#course').html(data);
-              @endif
-              });
-            $.ajax({
-            type: "post",
-                    url: '{{url("/")}}' + '/session-notes/getCourse',
-                    data: {'stud_id': val, '_token': '{{ csrf_token() }}'},
-                    success: function (data) {
-                    $('#course').html(data);
-                    }
-            });
-            }
                                         $(document).ready(function () {
                                         @if (isset($data))
                                                 var data = "<?php echo $data; ?>";

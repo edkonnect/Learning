@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\StudentLessonTutorAssignment;
 use App\Models\LessonPlan;
 use Carbon\Carbon;
-use App\Models\StudentCourseTutor;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -23,19 +22,16 @@ class CurriculumController extends Controller{
 
           $request->student;
           $course = $request->course;
-              $Students = Student::All()->pluck('name', 'id');
-              $studentID = $request->stud_id;
-              $data = '';
-              $Courses = StudentCourseTutor::with('getCourseDetail')->where('student_id', $studentID)->get();
-              $data .= "<option value=''>Select Course</option>";
-              foreach ($Courses as $key => $val) {
-                  $data .= "<option value=" . $val->$Courses->id . ">" . $val->$Courses->course_name . "</option>";
-              }              $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
+              $Students = Student::orderBy('name','ASC')->pluck('name', 'id');
+              $Courses = Course::orderBy('course_name','ASC')->pluck('course_name','id');
+
+
+$lesson = LessonPlan::where('course_id',$course)->orderBy('topic_name','ASC')->groupBy('topic_name')->pluck("topic_name","id");
 
                }
-else {
+  else {
   return view('/pages/page-404');
-}
+   }
       return view('curriculum.index', ['pageConfigs' => $pageConfigs, 'Students' => $Students, 'Courses' => $Courses,'lesson'=>$lesson]);
 }
 
@@ -48,20 +44,18 @@ else {
    $course = $request->course;
    $userID = Auth::user()->id;
    $getUserData = User::find($userID);
-   if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
-    {
+
+   if (is_object($getUserData) && $getUserData->roles == '2'  && $getUserData->status == 'Active') {
+
    $res =  DB::table('lesson_plan')
          ->leftjoin('student_lesson_tutor_assignment AS B', 'B.lesson_id', '=','lesson_plan.id')
          ->select('lesson_plan.id','lesson_plan.topic_name')
          ->where('B.student_id',$student)
          ->where('B.course_id',$course)
+         ->orderBy('topic_name','ASC')
          ->get();
 
-  $lesson = LessonPlan::where('course_id',$course)->pluck("topic_name","id");
-}
-else{
-  return view('/pages/page-404');
-
+  $lesson = LessonPlan::where('course_id',$course)->orderBy('topic_name','ASC')->groupBy('topic_name')->pluck("topic_name","id");
 }
  return view('curriculum.getCurriculum', ['pageConfigs' => $pageConfigs, 'lesson'=>$lesson,'res'=>$res]);
 
@@ -89,16 +83,8 @@ return Redirect()->back()->with('success','Curriculum Updated Successfully');
 
 
 public function createLesson(){
-  $userID = Auth::user()->id;
-  $getUserData = User::find($userID);
-  if (is_object($getUserData) && $getUserData->roles == '2' && $getUserData->status == 'Active')
-   {
-      $Courses = Course::All()->pluck('course_name','id');
-    }
-    else{
-      return view('/pages/page-404');
 
-    }
+      $Courses = Course::orderBy('course_name','ASC')->pluck('course_name','id');
       return view('curriculum.createLesson',compact('Courses'));
 }
 

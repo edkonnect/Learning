@@ -116,32 +116,9 @@ use App\Models\Course;
                                       </select>
                                   </div>
                               </div>
-                                  <div class="col m6 s12">
-                                      <h5>No.of Hours Spent</h5>
-                                      <div class="input-field">
-                                          <input type="text"  name ="no_of_hours"></input>
+                                 
 
-                                      </div>
-                                  </div>
-                              </div>
-                                  <div class="row">
-                                      <div class="col m6 s12">
-                                          <h5>No.of New Skills Taken</h5>
-                                          <div class="input-field">
-                                              <input type="text" name ="new_skills"></input>
 
-                                          </div>
-                                      </div>
-
-                                    <div class="col m6 s12">
-                                        <h5>No.of Assessment Taken</h5>
-                                        <div class="input-field">
-                                            <input type="text" name ="assessment"></input>
-
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
                                       <div class="col m6 s12">
                                           <h5>Participation Rate</h5>
                                           <div class="input-field">
@@ -155,7 +132,7 @@ use App\Models\Course;
                                               </select>
                                           </div>
                                       </div>
-</div>
+                                 </div>
 
                 <button type="submit" class="waves-effect waves-light btn" style="background-color: #736cb5;">Save</a>
 

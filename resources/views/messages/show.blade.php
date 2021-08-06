@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="col s12 m4 20">
                                             <div class="card-action " style="text-align: right;">
-                                                <h6 style="font-weight: bold;color: #8b62b5;">Date Time : {{isset($getData->date)?$getData->date.' '.$getData->time:''}}</h6>
+                                              <h6 style="font-weight: bold;color: #8b62b5;">Date Time : {{Carbon\Carbon::parse($getData->date)->format(' jS  F Y ').''.$getData->time}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                                             <div class="row">
                                                 <div class="col s12 m12 20">
                                                     <div class="card-action " style="text-align: right;">
-                                                        <h6 style="font-weight: bold;color: #8b62b5;">Date Time : {{isset($getData->getReply->created_at)?$getData->getReply->created_at:''}}</h6>
+                                                        <h6 style="font-weight: bold;color: #8b62b5;">Date Time : {{Carbon\Carbon::parse($getData->date_time)->format(' jS  F Y H:i:s')}}</h6>
                                                     </div>
                                                 </div>
                                             </div>
